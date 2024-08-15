@@ -3,125 +3,59 @@ import type { Config } from 'tailwindcss';
 const config = {
   darkMode: ['class'],
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}'
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}'
   ],
   prefix: '',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px'
+      }
+    },
     extend: {
       colors: {
         'color-primary': 'var(--color-primary)',
         'color-secondary': 'var(--color-secondary)',
         'color-teritary': 'var(--color-teritary)',
         'color-light': 'var(--color-light)',
-        bg: {
-          DEFAULT: 'hsl(var(--color-bg))',
-          inverse: 'hsl(var(--color-bg-inverse))',
-          surface: 'hsl(var(--color-bg-surface))',
-          muted: 'hsl(var(--color-bg-muted))',
-          disabled: 'hsl(var(--color-bg-disabled))',
-          overlay: 'hsl(var(--color-bg-overlay))',
-          tooltip: 'hsl(var(--color-bg-tooltip))',
-          neutral: {
-            DEFAULT: 'hsl(var(--color-bg-neutral))',
-            hover: 'hsl(var(--color-bg-neutral-hover))',
-            active: 'hsl(var(--color-bg-neutral-active))'
-          },
-          primary: {
-            DEFAULT: 'hsl(var(--color-bg-primary))',
-            hover: 'hsl(var(--color-bg-primary-hover))',
-            active: 'hsl(var(--color-bg-primary-active))'
-          },
-          success: {
-            DEFAULT: 'hsl(var(--color-bg-success))',
-            hover: 'hsl(var(--color-bg-success-hover))',
-            active: 'hsl(var(--color-bg-success-active))',
-            muted: {
-              DEFAULT: 'hsl(var(--color-bg-success-muted))',
-              hover: 'hsl(var(--color-bg-success-muted-hover))',
-              active: 'hsl(var(--color-bg-success-muted-active))'
-            }
-          },
-          danger: {
-            DEFAULT: 'hsl(var(--color-bg-danger))',
-            hover: 'hsl(var(--color-bg-danger-hover))',
-            active: 'hsl(var(--color-bg-danger-active))',
-            muted: {
-              DEFAULT: 'hsl(var(--color-bg-danger-muted))',
-              hover: 'hsl(var(--color-bg-danger-muted-hover))',
-              active: 'hsl(var(--color-bg-danger-muted-active))'
-            }
-          },
-          warning: {
-            DEFAULT: 'hsl(var(--color-bg-warning))',
-            hover: 'hsl(var(--color-bg-warning-hover))',
-            active: 'hsl(var(--color-bg-warning-active))',
-            muted: {
-              DEFAULT: 'hsl(var(--color-bg-warning-muted))',
-              hover: 'hsl(var(--color-bg-warning-muted-hover))',
-              active: 'hsl(var(--color-bg-warning-muted-active))'
-            }
-          },
-          accent: {
-            DEFAULT: 'hsl(var(--color-bg-accent))',
-            hover: 'hsl(var(--color-bg-accent-hover))',
-            active: 'hsl(var(--color-bg-accent-active))',
-            muted: {
-              DEFAULT: 'hsl(var(--color-bg-accent-muted))',
-              hover: 'hsl(var(--color-bg-accent-muted-hover))',
-              active: 'hsl(var(--color-bg-accent-muted-active))'
-            }
-          }
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))'
         },
-        fg: {
-          DEFAULT: 'hsl(var(--color-fg))',
-          muted: {
-            DEFAULT: 'hsl(var(--color-fg-muted))',
-            inverse: 'hsl(var(--color-fg-muted-inverse))'
-          },
-          inverse: 'hsl(var(--color-fg-inverse))',
-          disabled: 'hsl(var(--color-fg-disabled))',
-          link: {
-            DEFAULT: 'hsl(var(--color-fg-link))',
-            hover: 'hsl(var(--color-fg-link-hover))',
-            active: 'hsl(var(--color-fg-link-active))',
-            visited: 'hsl(var(--color-fg-link-visited))'
-          },
-          accent: 'hsl(var(--color-fg-accent))',
-          success: 'hsl(var(--color-fg-success))',
-          warning: 'hsl(var(--color-fg-warning))',
-          danger: 'hsl(var(--color-fg-danger))',
-          info: 'hsl(var(--color-fg-info))',
-          onAccent: 'hsl(var(--color-fg-onAccent))',
-          onNeutral: 'hsl(var(--color-fg-onNeutral))',
-          onPrimary: 'hsl(var(--color-fg-onPrimary))',
-          onSuccess: 'hsl(var(--color-fg-onSuccess))',
-          onMutedSuccess: 'hsl(var(--color-fg-onMutedSuccess))',
-          onDanger: 'hsl(var(--color-fg-onDanger))',
-          onMutedDanger: 'hsl(var(--color-fg-onMutedDanger))',
-          onWarning: 'hsl(var(--color-fg-onWarning))',
-          onMutedWarning: 'hsl(var(--color-fg-onMutedWarning))',
-          onTooltip: 'hsl(var(--color-fg-onTooltip))'
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))'
         },
-        border: {
-          DEFAULT: 'hsl(var(--color-border))',
-          field: 'hsl(var(--color-border-field))',
-          control: 'hsl(var(--color-border-control))',
-          hover: 'hsl(var(--color-border-hover))',
-          active: 'hsl(var(--color-border-active))',
-          disabled: 'hsl(var(--color-border-disabled))',
-          danger: 'hsl(var(--color-border-danger))',
-          success: 'hsl(var(--color-border-success))',
-          warning: 'hsl(var(--color-border-warning))',
-          info: 'hsl(var(--color-border-info))',
-          secondary: 'hsl(var(--color-border-secondary))',
-          focus: 'hsl(var(--color-border-focus))',
-          inverse: 'hsl(var(--color-border-inverse))'
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))'
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))'
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))'
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))'
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))'
         }
-      },
-      transitionTimingFunction: {
-        drawer: 'cubic-bezier(0.32,0.72,0,1)'
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -129,39 +63,22 @@ const config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       keyframes: {
-        'progress-grow': {
-          '0%': {
-            transform: 'scaleX(0.01)'
-          },
-          '20%': {
-            transform: 'scaleX(0.1)'
-          },
-          '30%': {
-            transform: 'scaleX(0.6)'
-          },
-          '40%,50%': {
-            transform: 'scaleX(0.9)'
-          },
-          '100%': {
-            transform: 'scaleX(1)'
-          }
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' }
         },
-        'progress-pulse': {
-          '0%': {
-            'mask-position': '200% center'
-          },
-          '100%': {
-            'mask-position': '0% center'
-          }
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' }
         }
       },
       animation: {
-        'progress-indeterminate':
-          'progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite normal none running'
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out'
       }
     }
   },
-  plugins: [require('tailwindcss-animate'), require('tailwindcss-react-aria-components')]
+  plugins: [require('tailwindcss-animate')]
 } satisfies Config;
 
 export default config;
