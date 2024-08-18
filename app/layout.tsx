@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 import './globals.css';
 
+import { Toaster } from '@/components/ui/toaster';
+
+import AuthContext from '@/providers/auth-provider';
+
 const nunito = Nunito({
   weight: ['400', '500', '600', '700', '900'],
   style: ['normal', 'italic'],
@@ -20,8 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={nunito.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <Toaster />
+      <body className={nunito.className}>
+        <AuthContext>{children}</AuthContext>
+      </body>
     </html>
   );
 }
