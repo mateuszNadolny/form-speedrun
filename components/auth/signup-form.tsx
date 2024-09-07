@@ -80,10 +80,10 @@ const SignupForm = () => {
   const mutation = useMutation({
     mutationFn: registerUser,
     onSuccess: async (data, values) => {
-      // `data` is the response from the server, `variables` are the original form values
+      // `data` is the response from the server, `valeus` are the original form values
 
       const callback = await signIn('credentials', {
-        username: data.username,
+        username: values.username,
         password: values.password,
         redirect: false
       });
