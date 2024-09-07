@@ -1,6 +1,6 @@
 import 'animate.css';
 
-import SigninEntrance from './signin-entrance';
+import { Button } from '../ui/button';
 
 const HeroSection = () => {
   return (
@@ -13,7 +13,7 @@ const HeroSection = () => {
         <span className="text-color-teritary font-bold"> submit a form</span>?
       </h3>
       <div className="animate__animated animate__backInUp animate__delay-1s mt-7 mx-4">
-        <SigninEntrance />
+        <Button className="font-regular text-[18.33px] bg-color-teritary">{`Let's get started`}</Button>
       </div>
     </>
   );
