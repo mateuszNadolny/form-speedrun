@@ -12,8 +12,6 @@ import { signIn, useSession } from 'next-auth/react';
 
 import { useToast } from '@/components/ui/use-toast';
 
-import useAuthLoadingStore from '@/store/auth-store';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -26,6 +24,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
+import { useMutation } from '@tanstack/react-query';
+
+import useAuthLoadingStore from '@/store/auth-store';
+
+import { CustomError } from '@/types/types';
 
 const formSchema = z.object({
   username: z.string().trim().min(3, {
@@ -56,27 +59,41 @@ const SigninForm = () => {
     }
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    signIn('credentials', {
-      ...values,
-      redirect: false
-    }).then((callback) => {
+  const mutation = useMutation({
+    mutationFn: (values: z.infer<typeof formSchema>) =>
+      signIn('credentials', {
+        ...values,
+        redirect: false
+      }),
+    onSuccess: (callback) => {
+      console.log(callback);
       if (callback?.error) {
         toast({
           variant: 'destructive',
           title: 'Something went wrong',
           description: callback.error
         });
-        setIsLoading(false);
-      }
-
-      if (callback?.ok && !callback?.error) {
+      } else if (callback?.ok) {
         toast({
-          title: '✅ Login successfull!'
+          title: '✅ Login successful!'
         });
       }
-    });
+    },
+    onError: (error: CustomError) => {
+      toast({
+        variant: 'destructive',
+        title: 'An error occurred',
+        description: error?.response?.data
+      });
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    }
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    mutation.mutate(values);
   }
 
   return (
@@ -122,8 +139,7 @@ const SigninForm = () => {
               type="submit"
               className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
               disabled={loading}>
-              {loading && <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />}
-              {!loading && 'Login'}
+              {loading ? <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" /> : 'Login'}
             </Button>
           </form>
         </Form>

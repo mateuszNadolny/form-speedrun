@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) {
-          throw new Error('Invalid credentials');
+          throw new Error('No such user found');
         }
 
         const user = await prisma.user.findUnique({
@@ -26,13 +26,13 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user?.hashedPassword) {
-          throw new Error('Invalid credentials');
+          throw new Error('No such user found');
         }
 
         const isCorrectPassword = await bcrypt.compare(credentials.password, user.hashedPassword);
 
         if (!isCorrectPassword) {
-          throw new Error('Invalid credentials');
+          throw new Error('Invalid password');
         }
 
         return user;

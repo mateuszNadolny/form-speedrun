@@ -5,6 +5,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 import AuthContext from '@/providers/auth-provider';
+import TanstackContext from '@/providers/tanstack-provider';
 
 const nunito = Nunito({
   weight: ['400', '500', '600', '700', '900'],
@@ -25,9 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Toaster />
       <body className={nunito.className}>
-        <AuthContext>{children}</AuthContext>
+        <Toaster />
+        <TanstackContext>
+          <AuthContext>{children}</AuthContext>
+        </TanstackContext>
       </body>
     </html>
   );

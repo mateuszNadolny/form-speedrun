@@ -4,6 +4,10 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import axios from 'axios';
+
+import { useMutation } from '@tanstack/react-query';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -28,14 +32,24 @@ import {
 import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
 
-const formSchema = z.object({
-  username: z.string().trim().min(3, {
-    message: 'Username has to be at least 3 characters'
-  }),
-  password: z.string().trim().min(8, {
-    message: 'Minimum 8 characters'
+import { CustomError } from '@/types/types';
+
+const formSchema = z
+  .object({
+    username: z.string().trim().min(3, {
+      message: 'Username has to be at least 3 characters'
+    }),
+    password: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    }),
+    confirmPassword: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    })
   })
-});
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirm']
+  });
 
 const SignupForm = () => {
   const session = useSession();
@@ -53,31 +67,59 @@ const SignupForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
+    }
+  });
+
+  const registerUser = async (values: z.infer<typeof formSchema>) => {
+    const response = await axios.post('/api/register', values);
+    return response.data;
+  };
+
+  const mutation = useMutation({
+    mutationFn: registerUser,
+    onSuccess: async (data, values) => {
+      // `data` is the response from the server, `variables` are the original form values
+
+      const callback = await signIn('credentials', {
+        username: data.username,
+        password: values.password,
+        redirect: false
+      });
+
+      if (callback?.error) {
+        toast({
+          variant: 'destructive',
+          title: '❌ Something went wrong',
+          description: callback.error
+        });
+      }
+
+      if (callback?.ok) {
+        toast({
+          variant: 'default',
+          title: '✅ Registration successful!',
+          description: callback.ok
+        });
+        router.push('/home');
+      }
+    },
+    onError: (error: CustomError) => {
+      toast({
+        variant: 'destructive',
+        title: '❌ Something went wrong',
+        description: error?.response?.data! || 'An error occurred'
+      });
+    },
+    onSettled: () => {
+      setIsLoading(false);
     }
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    signIn('credentials', {
-      ...values,
-      redirect: false
-    }).then((callback) => {
-      if (callback?.error) {
-        toast({
-          variant: 'destructive',
-          title: 'Something went wrong',
-          description: callback.error
-        });
-        setIsLoading(false);
-      }
-
-      if (callback?.ok && !callback?.error) {
-        toast({
-          title: '✅ Login successfull!'
-        });
-      }
-    });
+    mutation.mutate(values);
   }
 
   return (
@@ -101,9 +143,7 @@ const SignupForm = () => {
                   <FormControl>
                     <Input type="name" className="border-color-primary border-b" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Come up with some cool username that has at least 5 characters
-                  </FormDescription>
+                  <FormDescription>Provide username that has at least 5 characters</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -125,12 +165,26 @@ const SignupForm = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              disabled={loading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm password</FormLabel>
+                  <FormControl>
+                    <Input type="password" className="border-color-primary border-b" {...field} />
+                  </FormControl>
+                  <FormDescription>Confirm your password</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button
               type="submit"
               className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
               disabled={loading}>
-              {loading && <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />}
-              {!loading && 'Login'}
+              {loading ? <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" /> : 'Sign Up'}
             </Button>
           </form>
         </Form>
