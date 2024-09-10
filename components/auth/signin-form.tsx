@@ -29,6 +29,7 @@ import { useMutation } from '@tanstack/react-query';
 import useAuthLoadingStore from '@/store/auth-store';
 
 import { CustomError } from '@/types/types';
+import Link from 'next/link';
 
 const formSchema = z.object({
   username: z.string().trim().min(3, {
@@ -143,6 +144,9 @@ const SigninForm = () => {
             </Button>
           </form>
         </Form>
+        <Button className="w-full text-color-teritary mt-3 text-xs" variant="link">
+          <Link href="/restore-password">Forgot your password?</Link>
+        </Button>
       </CardContent>
     </Card>
   );

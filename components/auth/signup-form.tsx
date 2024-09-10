@@ -102,7 +102,7 @@ const SignupForm = () => {
           title: '✅ Registration successful!',
           description: callback.ok
         });
-        router.push('/home');
+        router.push('/');
       }
     },
     onError: (error: CustomError) => {
