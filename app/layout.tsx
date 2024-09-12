@@ -6,7 +6,6 @@ import { Toaster } from '@/components/ui/toaster';
 
 import AuthContext from '@/providers/auth-provider';
 import TanstackContext from '@/providers/tanstack-provider';
-import AuthControl from '@/components/ui/auth-control';
 
 const nunito = Nunito({
   weight: ['400', '500', '600', '700', '900'],
@@ -30,10 +29,7 @@ export default function RootLayout({
       <body className={nunito.className}>
         <Toaster />
         <TanstackContext>
-          <AuthContext>
-            <AuthControl />
-            {children}
-          </AuthContext>
+          <AuthContext>{children}</AuthContext>
         </TanstackContext>
       </body>
     </html>

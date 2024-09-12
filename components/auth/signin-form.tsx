@@ -32,8 +32,8 @@ import { CustomError } from '@/types/types';
 import Link from 'next/link';
 
 const formSchema = z.object({
-  username: z.string().trim().min(3, {
-    message: 'Username has to be at least 3 characters'
+  email: z.string().trim().email({
+    message: 'Not a valid e-mail'
   }),
   password: z.string().trim().min(8, {
     message: 'Password has to be at least 8 characters'
@@ -55,7 +55,7 @@ const SigninForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      email: '',
       password: ''
     }
   });
@@ -111,12 +111,12 @@ const SigninForm = () => {
             <FormField
               disabled={loading}
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="name" className="border-color-primary border-b" {...field} />
+                    <Input type="email" className="border-color-primary border-b" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -23,7 +23,6 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,6 +35,7 @@ import { CustomError } from '@/types/types';
 
 const formSchema = z
   .object({
+    email: z.string().trim().email({ message: 'Not a valid e-mail' }),
     username: z.string().trim().min(3, {
       message: 'Username has to be at least 3 characters'
     }),
@@ -59,13 +59,14 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (session?.status === 'authenticated') {
-      router.push('/home');
+      router.push('/');
     }
   }, [session?.status, router]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      email: '',
       username: '',
       password: '',
       confirmPassword: ''
@@ -83,7 +84,7 @@ const SignupForm = () => {
       // `data` is the response from the server, `valeus` are the original form values
 
       const callback = await signIn('credentials', {
-        username: values.username,
+        email: values.email,
         password: values.password,
         redirect: false
       });
@@ -136,6 +137,20 @@ const SignupForm = () => {
             <FormField
               disabled={loading}
               control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="Email" className="border-color-primary border-b" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              disabled={loading}
+              control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
@@ -143,7 +158,6 @@ const SignupForm = () => {
                   <FormControl>
                     <Input type="name" className="border-color-primary border-b" {...field} />
                   </FormControl>
-                  <FormDescription>Provide username that has at least 5 characters</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -158,9 +172,7 @@ const SignupForm = () => {
                   <FormControl>
                     <Input type="password" className="border-color-primary border-b" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Provide a password that has at least 8 characters
-                  </FormDescription>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -175,7 +187,6 @@ const SignupForm = () => {
                   <FormControl>
                     <Input type="password" className="border-color-primary border-b" {...field} />
                   </FormControl>
-                  <FormDescription>Confirm your password</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

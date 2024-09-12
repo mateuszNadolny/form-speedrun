@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SigninForm from './signin-form';
 import SignupForm from './signup-form';
+import ProvidersSelector from './providers-selector';
 
 const AuthTabs = () => {
   return (
@@ -14,6 +15,7 @@ const AuthTabs = () => {
           <TabsContent
             value="signin"
             className="bg-color-secondary text-color-light p-5 rounded-md">
+            <ProvidersSelector />
             <SigninForm />
           </TabsContent>
           <TabsContent
