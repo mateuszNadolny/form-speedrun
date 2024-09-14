@@ -25,7 +25,7 @@ const ProvidersSelector = () => {
           <FaGoogle className="text-color-light h-5 w-5" />
         </Button>
       </div>
-      <div className="w-full flex items-center gap-4 justify-center mt-2">
+      <div className="w-full flex items-center gap-4 justify-center mt-2 mb-2">
         <div className="h-[2px] bg-color-teritary w-full" />
         <p className="text-color-teritary">or</p>
         <div className="h-[2px] bg-color-teritary w-full" />
