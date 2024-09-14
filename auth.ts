@@ -5,13 +5,22 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from '@/lib/prismadb';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
-  callbacks: {
-    // async signIn({ user, account, profile }) {
-    //   if (account?.provider === 'google') {
-    //     user.username = profile?.email?.split('@')[0]; // Use part of email as username
-    //   }
-    //   return true;
-    // }
+  callbacks: {},
+  pages: {
+    signIn: '/signin',
+    error: '/error'
+  },
+  events: {
+    async linkAccount({ user }) {
+      await prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          emailVerified: new Date()
+        }
+      });
+    }
   },
   adapter: PrismaAdapter(prisma),
   session: {
