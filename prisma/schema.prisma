@@ -16,7 +16,8 @@ datasource db {
 model User {
   id             String     @id @default(auto()) @map("_id") @db.ObjectId
   name           String     @unique
-  email          String?    @unique
+  email          String    @unique
+  image          String?
   emailVerified  DateTime?
   hashedPassword String?
   createdAt      DateTime   @default(now())
