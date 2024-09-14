@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { useRouter } from 'next/navigation';
 
 import axios from 'axios';
@@ -11,8 +9,9 @@ import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { RegisterSchema } from '@/schemas';
 
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 import { useToast } from '@/components/ui/use-toast';
 
@@ -33,38 +32,13 @@ import { LuLoader2 } from 'react-icons/lu';
 
 import { CustomError } from '@/types/types';
 
-const formSchema = z
-  .object({
-    email: z.string().trim().email({ message: 'Not a valid e-mail' }),
-    username: z.string().trim().min(3, {
-      message: 'Username has to be at least 3 characters'
-    }),
-    password: z.string().trim().min(8, {
-      message: 'Minimum 8 characters'
-    }),
-    confirmPassword: z.string().trim().min(8, {
-      message: 'Minimum 8 characters'
-    })
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirm']
-  });
-
 const SignupForm = () => {
-  const session = useSession();
   const router = useRouter();
   const { loading, setIsLoading } = useAuthLoadingStore();
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (session?.status === 'authenticated') {
-      router.push('/');
-    }
-  }, [session?.status, router]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: '',
       username: '',
@@ -73,7 +47,7 @@ const SignupForm = () => {
     }
   });
 
-  const registerUser = async (values: z.infer<typeof formSchema>) => {
+  const registerUser = async (values: z.infer<typeof RegisterSchema>) => {
     const response = await axios.post('/api/register', values);
     return response.data;
   };
@@ -118,7 +92,7 @@ const SignupForm = () => {
     }
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof RegisterSchema>) {
     setIsLoading(true);
     mutation.mutate(values);
   }

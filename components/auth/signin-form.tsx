@@ -1,14 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { LoginSchema } from '@/schemas';
 
-import { signIn, useSession } from 'next-auth/react';
+import { login } from '@/actions/login';
 
 import { useToast } from '@/components/ui/use-toast';
 
@@ -31,29 +30,13 @@ import useAuthLoadingStore from '@/store/auth-store';
 import { CustomError } from '@/types/types';
 import Link from 'next/link';
 
-const formSchema = z.object({
-  email: z.string().trim().email({
-    message: 'Not a valid e-mail'
-  }),
-  password: z.string().trim().min(8, {
-    message: 'Password has to be at least 8 characters'
-  })
-});
-
 const SigninForm = () => {
-  const session = useSession();
   const router = useRouter();
   const { loading, setIsLoading } = useAuthLoadingStore();
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (session?.status === 'authenticated') {
-      router.push('/');
-    }
-  }, [session?.status, router]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: ''
@@ -61,23 +44,20 @@ const SigninForm = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (values: z.infer<typeof formSchema>) =>
-      signIn('credentials', {
-        ...values,
-        redirect: false
-      }),
+    mutationFn: async (values: z.infer<typeof LoginSchema>) => await login(values),
     onSuccess: (callback) => {
       console.log(callback);
       if (callback?.error) {
         toast({
           variant: 'destructive',
-          title: 'Something went wrong',
+          title: 'An error occurred',
           description: callback.error
         });
-      } else if (callback?.ok) {
+      } else {
         toast({
           title: '✅ Login successful!'
         });
+        router.push('/');
       }
     },
     onError: (error: CustomError) => {
@@ -92,7 +72,7 @@ const SigninForm = () => {
     }
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof LoginSchema>) {
     setIsLoading(true);
     mutation.mutate(values);
   }

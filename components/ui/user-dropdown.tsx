@@ -1,4 +1,4 @@
-import { signOut } from 'next-auth/react';
+import { signOut } from '@/auth';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -42,12 +42,18 @@ const UserDropdown = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4 text-color-light" />
-          <Button
-            onClick={() => signOut({ callbackUrl: '/' })}
-            variant="ghost"
-            className="text-color-light p-0 m-0 h-[36px] hover:bg-transparent hover:text-color-light cursor-default">
-            Log out
-          </Button>
+          <form
+            action={async () => {
+              'use server';
+              await signOut();
+            }}>
+            <Button
+              type="submit"
+              variant="ghost"
+              className="text-color-light p-0 m-0 h-[36px] hover:bg-transparent hover:text-color-light cursor-default">
+              Log out
+            </Button>
+          </form>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
