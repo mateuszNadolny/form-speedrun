@@ -8,7 +8,7 @@ import { getUserByEmail } from '@/lib/user';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, username, password } = body;
+    const { email, name, password } = body;
 
     if (!email || !password) {
       return new NextResponse('Missing info', { status: 400 });
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         email,
-        username,
+        name,
         hashedPassword
       }
     });

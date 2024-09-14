@@ -12,7 +12,7 @@ export const LoginSchema = z.object({
 export const RegisterSchema = z
   .object({
     email: z.string().trim().email({ message: 'Not a valid e-mail' }),
-    username: z.string().trim().min(3, {
+    name: z.string().trim().min(3, {
       message: 'Username has to be at least 3 characters'
     }),
     password: z.string().trim().min(8, {
