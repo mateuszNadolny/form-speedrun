@@ -1,18 +1,29 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
+
+import { useSearchParams } from 'next/navigation';
+
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
+
+import ProvidersError from './providers-error';
 import { Button } from '../ui/button';
 
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 const ProvidersSelector = () => {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get('error') === 'OAuthAccountNotLinked'
+      ? 'Email already in use with different provider'
+      : '';
   const onClick = async (provider: 'google' | 'github') => {
     await signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT });
   };
 
   return (
     <div className="w-full flex flex-col items-center">
+      <ProvidersError message={urlError} />
       <div className="w-full flex items-center justify-around gap-4 bg-color-secondary p-3 rounded-md">
         <Button
           className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
