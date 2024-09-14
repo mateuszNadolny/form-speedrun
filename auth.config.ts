@@ -10,8 +10,14 @@ import type { NextAuthConfig } from 'next-auth';
 
 export default {
   providers: [
-    GitHub,
-    Google,
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIEN_SECRET as string
+    }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+    }),
     Credentials({
       credentials: {
         email: { label: 'email', type: 'text' },
@@ -42,6 +48,7 @@ export default {
       }
     })
   ],
+
   debug: process.env.NODE_ENV === 'development',
   secret: process.env.AUTH_SECRET
 } satisfies NextAuthConfig;
