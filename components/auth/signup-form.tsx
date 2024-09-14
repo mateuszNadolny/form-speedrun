@@ -41,7 +41,7 @@ const SignupForm = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: '',
-      username: '',
+      name: '',
       password: '',
       confirmPassword: ''
     }
@@ -125,7 +125,7 @@ const SignupForm = () => {
             <FormField
               disabled={loading}
               control={form.control}
-              name="username"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
