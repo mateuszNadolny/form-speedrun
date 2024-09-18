@@ -2,8 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import axios from 'axios';
-
 import { useMutation } from '@tanstack/react-query';
 
 import { zodResolver } from '@hookform/resolvers/zod';
