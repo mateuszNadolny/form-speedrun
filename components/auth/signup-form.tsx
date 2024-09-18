@@ -31,6 +31,7 @@ import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
 
 import { CustomError } from '@/types/types';
+import { register } from '@/actions/register';
 
 const SignupForm = () => {
   const router = useRouter();
@@ -47,13 +48,8 @@ const SignupForm = () => {
     }
   });
 
-  const registerUser = async (values: z.infer<typeof RegisterSchema>) => {
-    const response = await axios.post('/api/register', values);
-    return response.data;
-  };
-
   const mutation = useMutation({
-    mutationFn: registerUser,
+    mutationFn: async (values: z.infer<typeof RegisterSchema>) => await register(values),
     onSuccess: async (data, values) => {
       // `data` is the response from the server, `valeus` are the original form values
 
@@ -84,7 +80,7 @@ const SignupForm = () => {
       toast({
         variant: 'destructive',
         title: '❌ Something went wrong',
-        description: error?.response?.data! || 'An error occurred'
+        description: error?.response?.data! || 'An error occurred from client component'
       });
     },
     onSettled: () => {
