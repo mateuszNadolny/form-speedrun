@@ -78,7 +78,7 @@ const SignupForm = () => {
       toast({
         variant: 'destructive',
         title: '❌ Something went wrong',
-        description: error?.response?.data! || 'An error occurred from client component'
+        description: error?.response?.data! || 'An error occurred'
       });
     },
     onSettled: () => {
