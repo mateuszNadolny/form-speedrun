@@ -4,11 +4,13 @@ import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 import prisma from '@/lib/prismadb';
-import { NextResponse } from 'next/server';
 
 import { getUserByEmail } from '@/lib/user';
 import { RegisterSchema } from '@/schemas';
 import { AuthError } from 'next-auth';
+
+import { generateVerificationToken } from '@/lib/tokens';
+import { sendVerificationEmail } from '@/lib/mail';
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validateFields = RegisterSchema.safeParse(values);
@@ -37,7 +39,16 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         hashedPassword
       }
     });
-    return { success: true, user };
+
+    const verificationToken = await generateVerificationToken(email);
+    if ('error' in verificationToken) {
+      return { error: verificationToken.error };
+    }
+
+    await sendVerificationEmail(verificationToken.email, verificationToken.token);
+    return {
+      success: 'Confirmation link has been sent to your email! Please verify within one hour'
+    };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

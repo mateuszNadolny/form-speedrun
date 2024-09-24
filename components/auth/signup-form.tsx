@@ -9,8 +9,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RegisterSchema } from '@/schemas';
 
-import { signIn } from 'next-auth/react';
-
 import { useToast } from '@/components/ui/use-toast';
 
 import useAuthLoadingStore from '@/store/auth-store';
@@ -48,37 +46,26 @@ const SignupForm = () => {
 
   const mutation = useMutation({
     mutationFn: async (values: z.infer<typeof RegisterSchema>) => await register(values),
-    onSuccess: async (data, values) => {
-      // `data` is the response from the server, `valeus` are the original form values
-
-      const callback = await signIn('credentials', {
-        email: values.email,
-        password: values.password,
-        redirect: false
-      });
-
-      if (callback?.error) {
-        toast({
-          variant: 'destructive',
-          title: '❌ Something went wrong',
-          description: callback.error
-        });
-      }
-
-      if (callback?.ok) {
+    onSuccess: (data) => {
+      if (data.success) {
         toast({
           variant: 'default',
           title: '✅ Registration successful!',
-          description: callback.ok
+          description: data.success
         });
-        router.push('/');
+      } else if (data.error) {
+        toast({
+          variant: 'destructive',
+          title: '⛔️ Registration failed',
+          description: data.error
+        });
       }
     },
-    onError: (error: CustomError) => {
+    onError: (error: Error) => {
       toast({
         variant: 'destructive',
-        title: '❌ Something went wrong',
-        description: error?.response?.data! || 'An error occurred'
+        title: '⛔️ Something went wrong',
+        description: error.message || 'An unexpected error occurred'
       });
     },
     onSettled: () => {

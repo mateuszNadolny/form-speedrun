@@ -46,11 +46,10 @@ const SigninForm = () => {
   const mutation = useMutation({
     mutationFn: async (values: z.infer<typeof LoginSchema>) => await login(values),
     onSuccess: (callback) => {
-      console.log(callback);
       if (callback?.error) {
         toast({
           variant: 'destructive',
-          title: 'An error occurred',
+          title: '⛔️ An error occurred',
           description: callback.error
         });
       } else {
