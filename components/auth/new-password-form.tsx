@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { LoginSchema } from '@/schemas';
+import { useSearchParams } from 'next/navigation';
+import { NewPasswordSchema } from '@/schemas';
 
-import { login } from '@/actions/login';
+import { newPassword } from '@/actions/new-password';
 
 import { useToast } from '@/components/ui/use-toast';
 
@@ -28,35 +29,45 @@ import { useMutation } from '@tanstack/react-query';
 import useAuthLoadingStore from '@/store/auth-store';
 
 import { CustomError } from '@/types/types';
-import Link from 'next/link';
 
-const SigninForm = () => {
+const NewPasswordForm = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  const newPasswordToken = params?.get('token');
   const { loading, setIsLoading } = useAuthLoadingStore();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: '',
-      password: ''
+      password: '',
+      confirmPassword: '',
+      token: newPasswordToken as string
     }
   });
 
   const mutation = useMutation({
-    mutationFn: async (values: z.infer<typeof LoginSchema>) => await login(values),
+    mutationFn: async (values: z.infer<typeof NewPasswordSchema>) =>
+      await newPassword({
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+        token: newPasswordToken as string
+      }),
     onSuccess: (callback) => {
       if (callback?.error) {
         toast({
           variant: 'destructive',
           title: '⛔️ An error occurred',
-          description: callback.error
+          description: callback.error as string
         });
       } else {
         toast({
-          title: '✅ Login successful!'
+          title:
+            '✅ Password updated succesfully! You will be redirected to signin page within 3 seconds'
         });
-        router.push('/');
+        setTimeout(() => {
+          router.push('/signin');
+        }, 3000);
       }
     },
     onError: (error: CustomError) => {
@@ -71,36 +82,21 @@ const SigninForm = () => {
     }
   });
 
-  function onSubmit(values: z.infer<typeof LoginSchema>) {
+  function onSubmit(values: z.infer<typeof NewPasswordSchema>) {
+    // e?.preventDefault();
     setIsLoading(true);
     mutation.mutate(values);
   }
 
   return (
-    <Card className="bg-color-secondary outline-none border-none text-color-light">
+    <Card className="bg-color-secondary outline-none border-none text-color-light w-[80%] md:w-[400px] p-5">
       <CardHeader className="text-color-light">
-        <CardTitle>Sign In</CardTitle>
-        <CardDescription className="text-color-light">
-          Sign in with username and password
-        </CardDescription>
+        <CardTitle>Reset your password</CardTitle>
+        <CardDescription className="text-color-light">Type in your new password</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <FormField
-              disabled={loading}
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type="email" className="border-color-primary border-b" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="password"
@@ -111,24 +107,46 @@ const SigninForm = () => {
                   <FormControl>
                     <Input type="password" className="border-color-primary border-b" {...field} />
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              disabled={loading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm password</FormLabel>
+                  <FormControl>
+                    <Input type="password" className="border-color-primary border-b" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="token"
+              disabled={loading}
+              render={({ field }) => <FormItem className="hidden" />}
             />
             <Button
               type="submit"
               className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
               disabled={loading}>
-              {loading ? <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" /> : 'Login'}
+              {loading ? (
+                <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />
+              ) : (
+                'Reset password'
+              )}
             </Button>
           </form>
         </Form>
-        <Button className="w-full text-color-teritary mt-3 text-xs" variant="link">
-          <Link href="/reset-password">Forgot your password?</Link>
-        </Button>
       </CardContent>
     </Card>
   );
 };
 
-export default SigninForm;
+export default NewPasswordForm;

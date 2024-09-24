@@ -1,13 +1,11 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { LoginSchema } from '@/schemas';
+import { ResetSchema } from '@/schemas';
 
-import { login } from '@/actions/login';
+import { resetPassword } from '@/actions/reset';
 
 import { useToast } from '@/components/ui/use-toast';
 
@@ -28,23 +26,20 @@ import { useMutation } from '@tanstack/react-query';
 import useAuthLoadingStore from '@/store/auth-store';
 
 import { CustomError } from '@/types/types';
-import Link from 'next/link';
 
-const SigninForm = () => {
-  const router = useRouter();
+const ResetForm = () => {
   const { loading, setIsLoading } = useAuthLoadingStore();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
-      email: '',
-      password: ''
+      email: ''
     }
   });
 
   const mutation = useMutation({
-    mutationFn: async (values: z.infer<typeof LoginSchema>) => await login(values),
+    mutationFn: async (values: z.infer<typeof ResetSchema>) => await resetPassword(values),
     onSuccess: (callback) => {
       if (callback?.error) {
         toast({
@@ -54,9 +49,8 @@ const SigninForm = () => {
         });
       } else {
         toast({
-          title: '✅ Login successful!'
+          title: '✅ Password reset link has been sent to your email!'
         });
-        router.push('/');
       }
     },
     onError: (error: CustomError) => {
@@ -71,17 +65,17 @@ const SigninForm = () => {
     }
   });
 
-  function onSubmit(values: z.infer<typeof LoginSchema>) {
+  function onSubmit(values: z.infer<typeof ResetSchema>) {
     setIsLoading(true);
     mutation.mutate(values);
   }
 
   return (
-    <Card className="bg-color-secondary outline-none border-none text-color-light">
+    <Card className="bg-color-secondary outline-none border-none text-color-light w-[80%] md:w-[400px] p-5">
       <CardHeader className="text-color-light">
-        <CardTitle>Sign In</CardTitle>
+        <CardTitle>Reset your password</CardTitle>
         <CardDescription className="text-color-light">
-          Sign in with username and password
+          Enter your email and we&apos;ll send you a link to reset your password
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -101,34 +95,22 @@ const SigninForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              disabled={loading}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" className="border-color-primary border-b" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <Button
               type="submit"
               className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
               disabled={loading}>
-              {loading ? <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" /> : 'Login'}
+              {loading ? (
+                <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />
+              ) : (
+                'Send reset link'
+              )}
             </Button>
           </form>
         </Form>
-        <Button className="w-full text-color-teritary mt-3 text-xs" variant="link">
-          <Link href="/reset-password">Forgot your password?</Link>
-        </Button>
       </CardContent>
     </Card>
   );
 };
 
-export default SigninForm;
+export default ResetForm;

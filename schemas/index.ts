@@ -24,5 +24,24 @@ export const RegisterSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
-    path: ['confirm']
+    path: ['confirmPassword']
+  });
+
+export const ResetSchema = z.object({
+  email: z.string().trim().email({ message: 'Not a valid e-mail' })
+});
+
+export const NewPasswordSchema = z
+  .object({
+    token: z.string(),
+    password: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    }),
+    confirmPassword: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    })
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword']
   });

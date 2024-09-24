@@ -19,6 +19,7 @@ model User {
   email          String    @unique
   image          String?
   emailVerified  DateTime?
+  lastPasswordUpdate DateTime?
   hashedPassword String?
   createdAt      DateTime   @default(now())
   scores         UserScore[]
@@ -29,7 +30,6 @@ model UserScore {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId @unique
   user      User     @relation(fields: [userId], references: [id])
- 
   score     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,6 +55,15 @@ model Account {
 }
 
 model VerificationToken {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   email String
   token String @unique
