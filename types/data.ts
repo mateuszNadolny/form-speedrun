@@ -4,17 +4,15 @@ const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
-const randomDate = faker.date.between({
-  from: '2020-01-01T00:00:00.000Z',
-  to: '2030-01-01T00:00:00.000Z'
-});
+const generateHourAndMinute = () => {
+  const randomDate = faker.date.anytime();
+  const dateObj = new Date(randomDate);
 
-const dateObj = new Date(randomDate);
+  const hours = dateObj.getUTCHours().toString().padStart(2, '0');
+  const minutes = dateObj.getUTCMinutes().toString().padStart(2, '0');
 
-const hours = dateObj.getUTCHours().toString().padStart(2, '0');
-const minutes = dateObj.getUTCMinutes().toString().padStart(2, '0');
-
-const randomTime = `${hours}:${minutes}`;
+  return `${hours}:${minutes}`;
+};
 
 export const inputTypes = [
   { type: 'text', label: 'Name', value: faker.person.fullName() },
@@ -29,9 +27,9 @@ export const inputTypes = [
   {
     type: 'date',
     label: 'Date of Birth',
-    value: faker.date.between({ from: '2000-01-01', to: Date.now() })
+    value: faker.date.between({ from: '1950-01-01', to: Date.now() })
   },
-  { type: 'time', label: 'Appointment Time', value: randomTime },
+  { type: 'time', label: 'Appointment Time', value: generateHourAndMinute() },
   { type: 'url', label: 'Website', value: faker.internet.url() },
   { type: 'color', label: 'Favorite Color', value: faker.internet.color() },
   {
