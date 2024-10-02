@@ -3,3 +3,17 @@ export interface CustomError extends Error {
     data?: string;
   };
 }
+
+export interface InputTypes {
+  type: string;
+  label: string;
+  value: string | number;
+  options?: string[];
+  min?: string;
+  max?: string;
+}
+
+export interface FormInputProps {
+  input: InputTypes;
+  onComplete: () => void;
+}

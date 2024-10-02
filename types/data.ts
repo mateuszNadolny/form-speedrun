@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-
+import { formatISODate } from '@/lib/time';
 const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
@@ -14,7 +14,23 @@ const generateHourAndMinute = () => {
   return `${hours}:${minutes}`;
 };
 
-export const inputTypes = [
+const generateCountryOptions = () => {
+  return [
+    faker.location.country(),
+    faker.location.country(),
+    faker.location.country(),
+    faker.location.country()
+  ];
+};
+
+const countryOptions = generateCountryOptions();
+
+const getRandomCountry = (arr: string[]) => {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+};
+
+export const inputs = [
   { type: 'text', label: 'Name', value: faker.person.fullName() },
   { type: 'email', label: 'Email', value: faker.internet.email() },
   {
@@ -27,10 +43,14 @@ export const inputTypes = [
   {
     type: 'date',
     label: 'Date of Birth',
-    value: faker.date.between({ from: '1950-01-01', to: Date.now() })
+    value: formatISODate(faker.date.between({ from: '1950-01-01', to: Date.now() }))
   },
   { type: 'time', label: 'Appointment Time', value: generateHourAndMinute() },
-  { type: 'url', label: 'Website', value: faker.internet.url() },
+  {
+    type: 'url',
+    label: 'Website',
+    value: faker.internet.url({ protocol: 'https', appendSlash: false })
+  },
   { type: 'color', label: 'Favorite Color', value: faker.internet.color() },
   {
     type: 'range',
@@ -50,12 +70,7 @@ export const inputTypes = [
   {
     type: 'select',
     label: 'Country',
-    options: [
-      faker.location.country(),
-      faker.location.country(),
-      faker.location.country(),
-      faker.location.country()
-    ],
-    value: null
+    options: countryOptions,
+    value: getRandomCountry(countryOptions)
   }
 ];
