@@ -47,6 +47,8 @@ const StepTwo = () => {
         alt="step2gif"
         width={300}
         height={300}
+        quality={100}
+        priority
         className="animate__animated animate__fadeIn"
       />
     </DialogHeader>
