@@ -7,7 +7,7 @@ interface GeneralTimerProps {
   startTime: number | null;
 }
 
-export default function GeneralTimer({ startTime }: GeneralTimerProps) {
+const GeneralTimer = ({ startTime }: GeneralTimerProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
@@ -25,4 +25,6 @@ export default function GeneralTimer({ startTime }: GeneralTimerProps) {
       {formatTime(elapsedTime)}
     </div>
   );
-}
+};
+
+export default GeneralTimer;
