@@ -4,6 +4,10 @@ export interface CustomError extends Error {
   };
 }
 
+export interface GeneralTimerProps {
+  startTime: number | null;
+}
+
 export interface InputTypes {
   type: string;
   label: string;

@@ -1,24 +1,23 @@
 'use client';
 
-import { formatTime } from '@/lib/time';
 import { useState, useEffect } from 'react';
+import { formatTime } from '@/lib/time';
+import { useTimerStore } from '@/store/timer-store';
 
-interface GeneralTimerProps {
-  startTime: number | null;
-}
-
-const GeneralTimer = ({ startTime }: GeneralTimerProps) => {
+const GeneralTimer = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
+  const { generalStartTime, generalEndTime } = useTimerStore();
 
   useEffect(() => {
-    if (startTime !== null) {
+    if (generalStartTime !== null) {
       const interval = setInterval(() => {
-        setElapsedTime(Date.now() - startTime);
-      }, 10); // Update every 10ms for smooth millisecond display
+        const endTime = generalEndTime || Date.now();
+        setElapsedTime(endTime - generalStartTime);
+      }, 10);
 
       return () => clearInterval(interval);
     }
-  }, [startTime]);
+  }, [generalStartTime, generalEndTime]);
 
   return (
     <div className="my-8 text-2xl text-color-secondary font-extralight">

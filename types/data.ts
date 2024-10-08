@@ -39,7 +39,7 @@ export const inputs = [
     value: faker.string.alpha({ length: { min: 5, max: 10 } })
   },
   { type: 'number', label: 'Age', value: faker.number.int({ min: 2, max: 99 }) },
-  { type: 'tel', label: 'Phone', value: faker.phone.number({ style: 'international' }) },
+  { type: 'tel', label: 'Phone number', value: faker.phone.number({ style: 'international' }) },
   {
     type: 'date',
     label: 'Date of Birth',
@@ -59,7 +59,7 @@ export const inputs = [
     min: '0',
     max: '100'
   },
-  { type: 'checkbox', label: 'Subscribe to newsletter', value: 'true' },
+  { type: 'checkbox', label: 'Subscribe to newsletter?', value: 'true' },
   {
     type: 'radio',
     label: 'Gender',

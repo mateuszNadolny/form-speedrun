@@ -2,42 +2,68 @@
 
 import { useState } from 'react';
 
-import { inputs } from '@/types/data';
-
-import { InputTypes } from '@/types/types';
-
-import GameInput from './game-input';
-import GeneralTimer from './general-timer';
 import { Button } from '@/components/ui/button';
-import { formatTime } from '@/lib/time';
+import GameInput from './game-input';
 import GameWelcomeScreen from './game-welcome-screen';
+import GeneralTimer from './general-timer';
+import SplitTimer from './split-timer';
+
+import { useTimerStore } from '@/store/timer-store';
+import { useInputStore } from '@/store/input-store';
+
+import { inputs } from '@/types/data';
+import { InputTypes } from '@/types/types';
+import { formatTime } from '@/lib/time';
 const Game = () => {
   const [gameState, setGameState] = useState('idle'); // idle, playing, finished
   const [currentInputIndex, setCurrentInputIndex] = useState(0);
   const [gameInputs, setGameInputs] = useState<InputTypes[]>([]);
-  const [startTime, setStartTime] = useState<number | null>(null);
-  const [endTime, setEndTime] = useState<number | null>(null);
+  const { addEntry, resetEntries } = useInputStore();
+  const {
+    startGeneralTimer,
+    stopGeneralTimer,
+    startSplitTimer,
+    stopSplitTimer,
+    resetTimers,
+    splitTimers
+  } = useTimerStore();
 
   const shuffleAndSelectInputs = () => {
     const shuffled = [...inputs].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 8).map((input) => ({
+    return shuffled.slice(0, 3).map((input) => ({
       ...input,
       value: input?.value?.toString() ?? ''
     }));
   };
 
   const startGame = () => {
-    setGameInputs(shuffleAndSelectInputs());
+    const selectedInputs = shuffleAndSelectInputs();
+    setGameInputs(selectedInputs);
     setCurrentInputIndex(0);
     setGameState('playing');
-    setStartTime(Date.now());
+    resetTimers();
+    resetEntries();
+    startGeneralTimer();
+    startSplitTimer(0);
   };
 
   const handleInputComplete = () => {
+    stopSplitTimer(currentInputIndex);
+    const currentInput = gameInputs[currentInputIndex];
+    const splitTime = splitTimers[currentInputIndex];
+    if (splitTime) {
+      const formattedTime = formatTime(splitTime.end! - splitTime.start);
+      addEntry(currentInput.label, formattedTime);
+    }
+
     if (currentInputIndex < gameInputs.length - 1) {
-      setCurrentInputIndex(currentInputIndex + 1);
+      setCurrentInputIndex((prevIndex) => {
+        const nextIndex = prevIndex + 1;
+        startSplitTimer(nextIndex);
+        return nextIndex;
+      });
     } else {
-      setEndTime(Date.now());
+      stopGeneralTimer();
       setGameState('finished');
     }
   };
@@ -47,7 +73,7 @@ const Game = () => {
       {gameState === 'idle' && <GameWelcomeScreen startGame={startGame} />}
       {gameState === 'playing' && (
         <div className="w-full flex lg:ml-80 flex-col items-start justify-center rounded-xl">
-          <GeneralTimer startTime={startTime!} />
+          <GeneralTimer />
           <div>
             <GameInput input={gameInputs[currentInputIndex]} onComplete={handleInputComplete} />
             <p className="mt-4 text-xs text-muted-foreground">
@@ -59,12 +85,11 @@ const Game = () => {
       {gameState === 'finished' && (
         <>
           <h1 className="text-5xl text-color-light mb-4">Finished!</h1>
-          <p className="text-color-teritary">
-            Time taken: {formatTime(Math.floor((endTime! - startTime!) / 1000))}
-          </p>
+          <GeneralTimer />
+          <SplitTimer />
           <p className="text-color-teritary">Input count: {gameInputs.length}</p>
           <Button
-            onClick={startGame}
+            onClick={() => {}}
             className="bg-color-teritary text-color-light hover:bg-color-primary">
             Play Again
           </Button>
