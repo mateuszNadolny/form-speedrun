@@ -6,9 +6,9 @@ export const formatTime = (time: number) => {
   if (minutes > 0) {
     return `${minutes.toString().padStart(2, '0')}:${seconds
       .toString()
-      .padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+      .padStart(2, '0')}:${milliseconds.toString().padStart(2, '0')}`;
   } else {
-    return `${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+    return `00:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(2, '0')}`;
   }
 };
 

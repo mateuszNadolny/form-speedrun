@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import GameInput from './game-input';
 import GameWelcomeScreen from './game-welcome-screen';
 import GeneralTimer from './general-timer';
-import SplitTimer from './split-timer';
+import Statistics from '../stats/statistics';
 
 import { useTimerStore } from '@/store/timer-store';
 import { useInputStore } from '@/store/input-store';
@@ -30,7 +30,7 @@ const Game = () => {
 
   const shuffleAndSelectInputs = () => {
     const shuffled = [...inputs].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3).map((input) => ({
+    return shuffled.slice(0, 8).map((input) => ({
       ...input,
       value: input?.value?.toString() ?? ''
     }));
@@ -82,24 +82,7 @@ const Game = () => {
           </div>
         </div>
       )}
-      {gameState === 'finished' && (
-        <>
-          <h1 className="text-5xl text-color-light mb-4">Finished!</h1>
-          <GeneralTimer />
-          <SplitTimer />
-          <p className="text-color-teritary">Input count: {gameInputs.length}</p>
-          <Button
-            onClick={() => {}}
-            className="bg-color-teritary text-color-light hover:bg-color-primary">
-            Play Again
-          </Button>
-        </>
-        //   <Results
-        //     startTime={startTime}
-        //     endTime={endTime}
-        //     inputCount={gameInputs.length}
-        //   />
-      )}
+      {gameState === 'finished' && <Statistics />}
     </div>
   );
 };

@@ -124,6 +124,19 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
             />
           </>
         );
+      case 'color':
+        return (
+          <>
+            <input
+              type="color"
+              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100px] h-[100px]"
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+            />
+          </>
+        );
       default:
         return (
           <input
