@@ -15,7 +15,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: 'Form Speedrunner 💨',
+  title: 'Form Speedrunner 🏃‍➡️',
   description: 'How fast can you submit a form?'
 };
 

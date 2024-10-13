@@ -20,7 +20,7 @@ const GeneralTimer = () => {
   }, [generalStartTime, generalEndTime]);
 
   return (
-    <div className="my-8 text-2xl text-color-secondary font-extralight">
+    <div className="my-8 text-4xl lg:text-2xl text-color-secondary font-extralight">
       {formatTime(elapsedTime)}
     </div>
   );

@@ -21,7 +21,7 @@ const SplitTimes = () => {
 
   const totalTime = countGeneralTime();
   return (
-    <div>
+    <div className="ml-6 lg:ml-0">
       <h2 className="text-2xl text-color-light mb-2 animate__animated animate__fadeInDown">
         Split Times:
       </h2>

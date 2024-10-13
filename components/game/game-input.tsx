@@ -35,7 +35,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <Textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="border-1 p-2 text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light"
+            className="border-1 p-2 text-lg lg:text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light w-[90%] lg:w-full"
             required
           />
         );
@@ -62,13 +62,14 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <RadioGroup
             className="text-color-light"
             onValueChange={(e) => {
-              console.log(value);
               setValue(e);
             }}>
             {input?.options?.map((option) => (
               <div key={option} className="flex items-center space-x-2">
-                <RadioGroupItem value={option} id={option} />
-                <Label htmlFor={option}>{option}</Label>
+                <RadioGroupItem value={option} id={option} className="text-xl text-color-light" />
+                <Label htmlFor={option} className="text-xl text-color-light">
+                  {option}
+                </Label>
               </div>
             ))}
           </RadioGroup>
@@ -82,12 +83,10 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
         );
       case 'range':
         return (
-          <div className="flex flex-row-reverse justify-end items-center gap-6">
-            <Label className="block text-4xl font-medium text-color-teritary">
-              {value ? value : 0}
-            </Label>
+          <div className="flex flex-row-reverse justify-end items-center gap-12 lg:gap-6">
+            <Label className="text-4xl font-medium text-color-teritary">{value ? value : 0}</Label>
             <input
-              className="w-[300px]"
+              className="w-[250px] lg:w-[300px]"
               defaultValue={0}
               type="range"
               min={input.min}
@@ -145,7 +144,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
             onChange={(e) => {
               setValue(e.target.value);
             }}
-            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px]"
+            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px]"
             required
           />
         );
@@ -153,24 +152,24 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="w-full">
-        <Label className="block text-[24px] lg:text-[48px] font-medium text-color-teritary mb-2">
+    <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center lg:items-start">
+      <div className="w-full flex flex-col items-center lg:items-start">
+        <Label className="block text-[34px] lg:text-[48px] font-medium text-color-teritary mb-2">
           {input.label}
         </Label>
         {input.type === 'date' ? (
-          <p className="text-[14.83px] lg:text-[18.33px] text-muted-foreground mb-4 select-none">
+          <p className="text-[18.33px] text-center lg:text-start text-muted-foreground mb-4 select-none">
             To enter:{' '}
             <span className="font-bold select-none">{formatDate(input.value as string)}</span>
           </p>
         ) : (
-          <p className="text-[14.83px] lg:text-[18.33px] text-muted-foreground mb-4 select-none">
+          <p className="text-[18.33px] text-center lg:text-start w-[90%] lg:w-full text-muted-foreground mb-4 select-none">
             To enter: <span className="font-bold select-none">{input.value}</span>
           </p>
         )}
         {renderInput()}
       </div>
-      <Button type="submit" className="bg-color-teritary text-color-light text-[18.33px]">
+      <Button type="submit" className="bg-color-teritary w-[150px] text-color-light text-[18.33px]">
         Submit
       </Button>
     </form>
