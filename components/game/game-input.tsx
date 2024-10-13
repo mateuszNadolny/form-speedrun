@@ -35,7 +35,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <Textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="border-1 p-2 text-lg lg:text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light w-[90%] lg:w-full"
+            className="border-1 p-2 text-lg lg:text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light w-[90%] lg:w-fullmy-2"
             required
           />
         );
@@ -60,7 +60,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
       case 'radio':
         return (
           <RadioGroup
-            className="text-color-light"
+            className="text-color-light my-2"
             onValueChange={(e) => {
               setValue(e);
             }}>
@@ -83,7 +83,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
         );
       case 'range':
         return (
-          <div className="flex flex-row-reverse justify-end items-center gap-12 lg:gap-6">
+          <div className="flex flex-row-reverse justify-end items-center gap-12 lg:gap-6 my-2">
             <Label className="text-4xl font-medium text-color-teritary">{value ? value : 0}</Label>
             <input
               className="w-[250px] lg:w-[300px]"
@@ -102,7 +102,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
             <input
               type="date"
               id="date"
-              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px]"
+              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
               value={value}
               onChange={(e) => {
                 setValue(e.target.value);
@@ -115,7 +115,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <>
             <input
               type="time"
-              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px]"
+              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
               value={value}
               onChange={(e) => {
                 setValue(e.target.value);
@@ -128,7 +128,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <>
             <input
               type="color"
-              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100px] h-[100px]"
+              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100px] h-[100px] my-2"
               value={value}
               onChange={(e) => {
                 setValue(e.target.value);
@@ -144,7 +144,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
             onChange={(e) => {
               setValue(e.target.value);
             }}
-            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px]"
+            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
             required
           />
         );
@@ -153,17 +153,17 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center lg:items-start">
-      <div className="w-full flex flex-col items-center lg:items-start">
-        <Label className="block text-[34px] lg:text-[48px] font-medium text-color-teritary mb-2">
+      <div className="w-full flex flex-col items-center lg:items-start space-y-6">
+        <Label className="block text-4xl lg:text-5xl font-medium text-color-teritary mb-2">
           {input.label}
         </Label>
         {input.type === 'date' ? (
-          <p className="text-[18.33px] text-center lg:text-start text-muted-foreground mb-4 select-none">
+          <p className="text-lg text-center lg:text-start text-muted-foreground mb-4 select-none">
             To enter:{' '}
             <span className="font-bold select-none">{formatDate(input.value as string)}</span>
           </p>
         ) : (
-          <p className="text-[18.33px] text-center lg:text-start w-[90%] lg:w-full text-muted-foreground mb-4 select-none">
+          <p className="text-lg text-center lg:text-start w-[90%] lg:w-full text-muted-foreground mb-4 select-none">
             To enter: <span className="font-bold select-none">{input.value}</span>
           </p>
         )}
