@@ -51,7 +51,7 @@ const Game = () => {
     const currentInput = gameInputs[currentInputIndex];
     const splitTime = splitTimers[currentInputIndex];
     if (splitTime) {
-      const formattedTime = formatTime(splitTime.end! - splitTime.start);
+      const formattedTime = formatTime(Date.now() - splitTime.start);
       addEntry(currentInput.label, formattedTime);
     }
 

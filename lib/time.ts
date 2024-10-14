@@ -27,3 +27,9 @@ export const formatDate = (dateString: string) => {
 
   return `${day}.${month}.${year}`;
 };
+
+export const convertToMilliseconds = (timeString: string) => {
+  const [minutes, seconds, milliseconds] = timeString.split(':').map(Number);
+
+  return Math.abs(minutes * 60 * 1000 + seconds * 1000 + milliseconds);
+};

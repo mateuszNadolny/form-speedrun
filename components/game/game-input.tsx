@@ -169,7 +169,10 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
         )}
         {renderInput()}
       </div>
-      <Button type="submit" className="bg-color-teritary w-[150px] text-color-light text-[18.33px]">
+      <Button
+        type="submit"
+        className="bg-color-teritary w-[150px] text-color-light text-[18.33px]"
+        disabled={input.value !== value}>
         Submit
       </Button>
     </form>
