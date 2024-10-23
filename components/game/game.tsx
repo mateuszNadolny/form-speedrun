@@ -29,7 +29,7 @@ const Game = () => {
 
   const shuffleAndSelectInputs = () => {
     const shuffled = [...inputs].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 8).map((input) => ({
+    return shuffled.slice(0, 6).map((input) => ({
       ...input,
       value: input?.value?.toString() ?? ''
     }));

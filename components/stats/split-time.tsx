@@ -10,8 +10,6 @@ import { ChevronsRight } from 'lucide-react';
 const SplitTimes = () => {
   const { splitTimers } = useTimerStore();
   const { entries } = useInputStore();
-  console.log(splitTimers);
-  console.log(entries);
 
   return (
     <div className="ml-6 lg:ml-0">

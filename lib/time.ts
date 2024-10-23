@@ -29,7 +29,16 @@ export const formatDate = (dateString: string) => {
 };
 
 export const convertToMilliseconds = (timeString: string) => {
-  const [minutes, seconds, milliseconds] = timeString.split(':').map(Number);
+  const [minutes, seconds, centiseconds] = timeString.split(':').map(Number);
+  return Math.abs(minutes * 60 * 1000 + seconds * 1000 + centiseconds * 10);
+};
 
-  return Math.abs(minutes * 60 * 1000 + seconds * 1000 + milliseconds);
+export const convertFromMilliseconds = (milliseconds: number): string => {
+  const minutes = Math.floor(milliseconds / 60000);
+  const seconds = Math.floor((milliseconds % 60000) / 1000);
+  const centiseconds = Math.floor((milliseconds % 1000) / 10);
+
+  return `${minutes.toString().padStart(2, '0')}:${seconds
+    .toString()
+    .padStart(2, '0')}:${centiseconds.toString().padStart(2, '0')}`;
 };

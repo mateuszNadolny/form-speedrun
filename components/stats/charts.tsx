@@ -1,6 +1,6 @@
 'use client';
 
-import { Bar, BarChart, XAxis } from 'recharts';
+import { Line, LineChart, XAxis, YAxis, LabelList, CartesianGrid } from 'recharts';
 import {
   ChartConfig,
   ChartContainer,
@@ -36,20 +36,43 @@ const Chart = () => {
 
   return (
     <ChartContainer config={chartConfig} className="min-h-[400px] w-full">
-      <BarChart accessibilityLayer data={chartData}>
+      <LineChart
+        accessibilityLayer
+        data={chartData}
+        margin={{
+          left: 12,
+          right: 12
+        }}>
+        <CartesianGrid vertical={false} strokeWidth={0.1} />
         <XAxis
           dataKey="label"
           type="category"
-          width={400}
-          tickLine={false}
-          axisLine={false}
+          tickLine={true}
+          axisLine={true}
+          tickMargin={3}
           tickFormatter={(value) => {
             return sliceLabel(value);
           }}
         />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="timeValue" fill="var(--color-teritary)" radius={4} />
-      </BarChart>
+        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+        <Line
+          type="natural"
+          dataKey="timeValue"
+          stroke="var(--color-teritary)"
+          strokeWidth={2}
+          dot={{ fill: 'var(--color-teritary)', r: 4 }}
+          activeDot={{
+            r: 6
+          }}>
+          <LabelList
+            dataKey="formattedTime"
+            position="top"
+            offset={12}
+            fill="var(--color-teritary)"
+            fontSize={13}
+          />
+        </Line>
+      </LineChart>
     </ChartContainer>
   );
 };

@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 
 import { cn } from '@/lib/utils';
+import { convertFromMilliseconds } from '@/lib/time';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
@@ -160,7 +161,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          'grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-color-secondary px-2.5 py-1.5 text-xs text-color-light shadow-xl',
+          'grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-color-secondary px-2.5 py-1.5 text-xs shadow-xl',
           className
         )}>
         {!nestLabel ? tooltipLabel : null}
@@ -174,7 +175,7 @@ const ChartTooltipContent = React.forwardRef<
               <div
                 key={item.dataKey}
                 className={cn(
-                  'flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground',
+                  'flex w-full flex-wrap items-stretch gap-2 text-color-teritary [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground',
                   indicator === 'dot' && 'items-center'
                 )}>
                 {formatter && item?.value !== undefined && item.name ? (
@@ -212,13 +213,11 @@ const ChartTooltipContent = React.forwardRef<
                       )}>
                       <div className="grid gap-1.5">
                         {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground">
-                          {itemConfig?.label || item.name}
-                        </span>
+                        <span className="text-muted-foreground">{'time:'}</span>
                       </div>
                       {item.value && (
-                        <span className="font-mono font-medium tabular-nums text-foreground">
-                          {item.value.toLocaleString()}
+                        <span className="font-mono font-medium tabular-nums text-color-teritary">
+                          {convertFromMilliseconds(+item.value)}
                         </span>
                       )}
                     </div>
