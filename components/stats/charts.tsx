@@ -40,8 +40,10 @@ const Chart = () => {
         accessibilityLayer
         data={chartData}
         margin={{
-          left: 12,
-          right: 12
+          top: 20,
+          right: 40,
+          left: 40,
+          bottom: 10
         }}>
         <CartesianGrid vertical={false} strokeWidth={0.1} />
         <XAxis
@@ -49,14 +51,14 @@ const Chart = () => {
           type="category"
           tickLine={true}
           axisLine={true}
-          tickMargin={3}
-          tickFormatter={(value) => {
-            return sliceLabel(value);
-          }}
+          tickMargin={5}
+          tickFormatter={(value) => sliceLabel(value)}
+          interval={0}
         />
+        <YAxis hide />
         <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
         <Line
-          type="natural"
+          type="monotone"
           dataKey="timeValue"
           stroke="var(--color-teritary)"
           strokeWidth={2}
