@@ -17,6 +17,7 @@ import { Button } from '../ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 import { formatDate } from '@/lib/time';
+import PasswordInput from '../ui/password-input';
 
 const FormInput = ({ input, onComplete }: FormInputProps) => {
   const [value, setValue] = useState('');
@@ -35,7 +36,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <Textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="border-1 p-2 text-lg lg:text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light w-[90%] lg:w-fullmy-2"
+            className="border-1 p-2 text-lg lg:text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light w-[90%] lg:w-full my-2"
             required
           />
         );
@@ -135,6 +136,17 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
               }}
             />
           </>
+        );
+      case 'password':
+        return (
+          <PasswordInput
+            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            required
+          />
         );
       default:
         return (
