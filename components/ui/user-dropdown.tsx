@@ -1,4 +1,4 @@
-import { signOut } from '@/auth';
+import { signOut, auth } from '@/auth';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +12,8 @@ import {
 import { Settings, User, LogOut } from 'lucide-react';
 import { FaUser } from 'react-icons/fa';
 
-const UserDropdown = () => {
+const UserDropdown = async () => {
+  const session = await auth();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,22 +27,22 @@ const UserDropdown = () => {
       <DropdownMenuContent className="w-56 bg-color-secondary" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium text-color-light">John Doe</p>
-            <p className="text-xs leading-none text-muted-foreground">john@example.com</p>
+            <p className="text-sm font-medium text-color-light">{session?.user?.name}</p>
+            <p className="text-xs leading-none text-muted-foreground">{session?.user?.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <User className="mr-2 h-4 w-4 text-color-light" />
-          <span className="text-color-light">Profile</span>
+          <User className="mr-2 h-4 w-4" />
+          <span>Profile</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4 text-color-light" />
-          <span className="text-color-light">Settings</span>
+          <Settings className="mr-2 h-4 w-4" />
+          <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4 text-color-light" />
+          <LogOut className="mr-2 h-4 w-4" />
           <form
             action={async () => {
               'use server';
@@ -50,7 +51,7 @@ const UserDropdown = () => {
             <Button
               type="submit"
               variant="ghost"
-              className="text-color-light p-0 m-0 h-[36px] hover:bg-transparent hover:text-color-light cursor-default">
+              className="text-color-light p-0 m-0 h-[36px] hover:bg-transparent hover:text-color-teritary cursor-pointer">
               Log out
             </Button>
           </form>
