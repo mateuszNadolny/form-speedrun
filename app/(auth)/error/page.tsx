@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 const ErrorPage = () => {
   const router = useRouter();
   return (
-    <main className="flex h-screen min-h-screen flex-col items-center justify-center bg-color-primary overflow-hidden">
+    <section className="flex h-screen min-h-screen flex-col items-center justify-center bg-color-primary overflow-hidden">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-destructive mb-4">Oops! Something went wrong 🥲</h1>
         <p className="text-lg text-muted-foreground mb-8">
@@ -17,7 +17,7 @@ const ErrorPage = () => {
           Go Back
         </Button>
       </div>
-    </main>
+    </section>
   );
 };
 

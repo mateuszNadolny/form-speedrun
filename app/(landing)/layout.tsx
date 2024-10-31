@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function LandingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen h-screen w-full">
+    <main className="min-h-screen w-full">
       <AuthControlWrapper />
       {children}
     </main>
