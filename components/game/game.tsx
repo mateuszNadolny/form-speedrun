@@ -71,7 +71,7 @@ const Game = () => {
     <div className="w-full h-screen flex flex-col items-start justify-center">
       {gameState === 'idle' && <GameWelcomeScreen startGame={startGame} />}
       {gameState === 'playing' && (
-        <div className="w-full h-full flex mt-28 lg:mt-0 lg:ml-80 flex-col items-center lg:items-start justify-start lg:justify-center rounded-xl">
+        <div className="lg:w-[600px] w-full h-full flex mt-28 lg:mt-0 lg:ml-80 flex-col items-center lg:items-start justify-start lg:justify-center rounded-xl">
           <GeneralTimer />
           <div className="flex flex-col items-center lg:items-start space-y-6">
             <GameInput input={gameInputs[currentInputIndex]} onComplete={handleInputComplete} />

@@ -8,7 +8,7 @@ interface GameWelcomeScreenProps {
 
 const GameWelcomeScreen = ({ startGame }: GameWelcomeScreenProps) => {
   return (
-    <div className="w-full flex flex-col lg:ml-80 lg:items-start items-center justify-center animate__animated animate__fadeIn space-y-10">
+    <div className="w-full lg:w-[600px] flex flex-col lg:ml-80 lg:items-start items-center justify-center animate__animated animate__fadeIn space-y-10">
       <h1 className="text-color-light font-extrabold text-4xl lg:text-6xl">Are you ready?</h1>
       <Button
         onClick={startGame}
