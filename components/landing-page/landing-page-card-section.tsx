@@ -29,6 +29,7 @@ const LandingPageCardSection = () => {
 
   const container = {
     hidden: { opacity: 0 },
+
     show: {
       opacity: 1,
       transition: {
@@ -42,6 +43,7 @@ const LandingPageCardSection = () => {
 
   const item = {
     hidden: { opacity: 0, y: 50 },
+
     show: {
       opacity: 1,
       y: 0,
@@ -62,7 +64,12 @@ const LandingPageCardSection = () => {
       animate="show"
       viewport={{ once: true, amount: 0.3 }}>
       {CARD_DATA.map((card) => (
-        <motion.div key={card.id} variants={item}>
+        <motion.div
+          key={card.id}
+          variants={item}
+          whileHover={{
+            scale: 1.05
+          }}>
           <LandingPageCard {...card} />
         </motion.div>
       ))}

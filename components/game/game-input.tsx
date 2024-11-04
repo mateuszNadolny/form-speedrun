@@ -13,7 +13,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { FormInputProps } from '@/types/types';
-import { Button } from '../ui/button';
+import PrimaryButton from '../ui/primary-button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 import { formatDate } from '@/lib/time';
@@ -180,12 +180,12 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
         )}
         {renderInput()}
       </div>
-      <Button
+      <PrimaryButton
         type="submit"
         className="bg-color-teritary w-[150px] text-color-light text-[18.33px]"
         disabled={input.value !== value}>
         Submit
-      </Button>
+      </PrimaryButton>
     </form>
   );
 };

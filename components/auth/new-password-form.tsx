@@ -11,9 +11,8 @@ import { NewPasswordSchema } from '@/schemas';
 import { newPassword } from '@/actions/new-password';
 
 import { useToast } from '@/components/ui/use-toast';
-
+import PrimaryButton from '../ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -132,16 +131,13 @@ const NewPasswordForm = () => {
               disabled={loading}
               render={({ field }) => <FormItem className="hidden" />}
             />
-            <Button
-              type="submit"
-              className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
-              disabled={loading}>
+            <PrimaryButton type="submit" className="w-full text-md p-5" disabled={loading}>
               {loading ? (
                 <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />
               ) : (
                 'Reset password'
               )}
-            </Button>
+            </PrimaryButton>
           </form>
         </Form>
       </CardContent>

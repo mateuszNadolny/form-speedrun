@@ -28,12 +28,12 @@ const ProvidersSelector = () => {
         <Button
           className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
           onClick={() => onClick('github')}>
-          <FaGithub className="text-color-light h-5 w-5" />
+          <FaGithub className="text-white h-5 w-5" />
         </Button>
         <Button
           className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
           onClick={() => onClick('google')}>
-          <FaGoogle className="text-color-light h-5 w-5" />
+          <FaGoogle className="text-white h-5 w-5" />
         </Button>
       </div>
       <div className="w-full flex items-center gap-4 justify-around  mt-6 mb-6">

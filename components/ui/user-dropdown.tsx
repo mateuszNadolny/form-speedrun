@@ -24,14 +24,14 @@ const UserDropdown = async () => {
           <FaUser className="text-color-teritary hover:opacity-70" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-color-secondary" align="end" forceMount>
+      <DropdownMenuContent className="w-56 bg-gray-800/50 border-gray-700" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium text-color-light">{session?.user?.name}</p>
             <p className="text-xs leading-none text-muted-foreground">{session?.user?.email}</p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-gray-700" />
         <DropdownMenuItem>
           <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
@@ -40,9 +40,8 @@ const UserDropdown = async () => {
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4" />
+        <DropdownMenuSeparator className="bg-gray-700" />
+        <DropdownMenuItem className="w-full">
           <form
             action={async () => {
               'use server';
@@ -51,7 +50,8 @@ const UserDropdown = async () => {
             <Button
               type="submit"
               variant="ghost"
-              className="text-color-light p-0 m-0 h-[36px] hover:bg-transparent hover:text-color-teritary cursor-pointer">
+              className="text-color-light p-0 m-0 h-[36px] w-56 flex justify-start hover:bg-transparent hover:text-color-secondary cursor-pointer">
+              <LogOut className="mr-2 h-4 w-4" />
               Log out
             </Button>
           </form>

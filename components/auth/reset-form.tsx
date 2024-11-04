@@ -8,9 +8,8 @@ import { ResetSchema } from '@/schemas';
 import { resetPassword } from '@/actions/reset';
 
 import { useToast } from '@/components/ui/use-toast';
-
+import PrimaryButton from '../ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -96,16 +95,13 @@ const ResetForm = () => {
               )}
             />
 
-            <Button
-              type="submit"
-              className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
-              disabled={loading}>
+            <PrimaryButton type="submit" className="w-full text-md p-5" disabled={loading}>
               {loading ? (
                 <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />
               ) : (
                 'Send reset link'
               )}
-            </Button>
+            </PrimaryButton>
           </form>
         </Form>
       </CardContent>

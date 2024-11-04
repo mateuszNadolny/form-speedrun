@@ -12,9 +12,8 @@ import { RegisterSchema } from '@/schemas';
 import { useToast } from '@/components/ui/use-toast';
 
 import useAuthLoadingStore from '@/store/auth-store';
-
+import PrimaryButton from '../ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -26,7 +25,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
 
-import { CustomError } from '@/types/types';
 import { register } from '@/actions/register';
 
 const SignupForm = () => {
@@ -146,12 +144,9 @@ const SignupForm = () => {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="w-full bg-color-teritary text-color-light hover:bg-color-primary"
-              disabled={loading}>
+            <PrimaryButton type="submit" className="w-full text-md p-5" disabled={loading}>
               {loading ? <LuLoader2 className="h-[1.2rem] w-[1.2rem] animate-spin" /> : 'Sign Up'}
-            </Button>
+            </PrimaryButton>
           </form>
         </Form>
       </CardContent>

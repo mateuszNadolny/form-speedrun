@@ -20,4 +20,4 @@ export const apiAuthPrefix = '/api/auth';
  * Default redirect for logged in users
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = '/';
+export const DEFAULT_LOGIN_REDIRECT = '/game';

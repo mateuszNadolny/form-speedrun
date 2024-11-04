@@ -1,6 +1,7 @@
 import 'animate.css';
-import { Button } from '@/components/ui/button';
+import PrimaryButton from '@/components/ui/primary-button';
 import GameInstruction from './game-instruction';
+import { Play } from 'lucide-react';
 
 interface GameWelcomeScreenProps {
   startGame: () => void;
@@ -8,13 +9,14 @@ interface GameWelcomeScreenProps {
 
 const GameWelcomeScreen = ({ startGame }: GameWelcomeScreenProps) => {
   return (
-    <div className="w-full lg:w-[600px] flex flex-col lg:ml-80 lg:items-start items-center justify-center animate__animated animate__fadeIn space-y-10">
-      <h1 className="text-color-light font-extrabold text-4xl lg:text-6xl">Are you ready?</h1>
-      <Button
-        onClick={startGame}
-        className="bg-color-teritary text-color-light text-xs lg:text-2xl lg:h-12 my-7">
+    <div className="w-full flex flex-col items-center justify-center md:justify-start animate__animated animate__fadeIn space-y-10">
+      <h1 className="text-color-light font-extrabold text-4xl lg:text-7xl tracking-tight">
+        Are you ready?
+      </h1>
+      <PrimaryButton onClick={startGame} className="flex gap-2">
+        <Play />
         Start Game
-      </Button>
+      </PrimaryButton>
       <GameInstruction />
     </div>
   );
