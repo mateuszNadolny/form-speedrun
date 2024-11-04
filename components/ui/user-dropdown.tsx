@@ -20,7 +20,7 @@ const UserDropdown = async () => {
         <Button
           size="icon"
           variant="link"
-          className="animate__animated animate__backInRight animate__delay-1s font-regular text-[18.33px] hover:opacity-70 fixed top-2 lg:top-10 right-2 lg:right-20 cursor-pointer p-0 w-[1em] h-[1em]">
+          className="animate__animated animate__backInRight animate__delay-1s font-regular text-[18.33px] hover:opacity-70 fixed top-6 lg:top-10 right-6 lg:right-20 cursor-pointer p-0 w-[1em] h-[1em]">
           <FaUser className="text-color-teritary hover:opacity-70" />
         </Button>
       </DropdownMenuTrigger>
