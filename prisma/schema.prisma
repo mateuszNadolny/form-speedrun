@@ -28,12 +28,20 @@ model User {
 
 model UserScore {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId @unique
+  userId    String   @db.ObjectId
   user      User     @relation(fields: [userId], references: [id])
-  score     Int
+  totalTime Int
+  splitTimes SplitTime[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
 
+model SplitTime {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  label     String
+  time      Int
+  userScoreId String   @db.ObjectId
+  userScore UserScore @relation(fields: [userScoreId], references: [id])
 }
 
 model Account {

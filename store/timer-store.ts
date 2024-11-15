@@ -9,9 +9,10 @@ interface TimerState {
   startSplitTimer: (index: number) => void;
   stopSplitTimer: (index: number) => void;
   resetTimers: () => void;
+  getSplitTime: (index: number) => number;
 }
 
-export const useTimerStore = create<TimerState>((set) => ({
+export const useTimerStore = create<TimerState>((set, get) => ({
   generalStartTime: null,
   generalEndTime: null,
   splitTimers: {},
@@ -25,11 +26,24 @@ export const useTimerStore = create<TimerState>((set) => ({
       }
     })),
   stopSplitTimer: (index) =>
-    set((state) => ({
-      splitTimers: {
-        ...state.splitTimers,
-        [index]: { ...state.splitTimers[index], end: Date.now() }
-      }
-    })),
-  resetTimers: () => set({ generalStartTime: null, generalEndTime: null, splitTimers: {} })
+    set((state) => {
+      const currentTimer = state.splitTimers[index];
+      if (!currentTimer) return state;
+
+      return {
+        splitTimers: {
+          ...state.splitTimers,
+          [index]: {
+            ...currentTimer,
+            end: Date.now()
+          }
+        }
+      };
+    }),
+  resetTimers: () => set({ generalStartTime: null, generalEndTime: null, splitTimers: {} }),
+  getSplitTime: (index) => {
+    const timer = get().splitTimers[index];
+    if (!timer || timer.end === null) return 0;
+    return timer.end - timer.start;
+  }
 }));

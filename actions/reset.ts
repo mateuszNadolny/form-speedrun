@@ -2,8 +2,6 @@
 
 import { z } from 'zod';
 
-import prisma from '@/lib/prismadb';
-
 import { ResetSchema } from '@/schemas';
 import { getUserByEmail } from '@/lib/user';
 import { sendPasswordResetEmail } from '@/lib/mail';

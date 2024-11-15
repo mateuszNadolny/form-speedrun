@@ -42,3 +42,13 @@ export const convertFromMilliseconds = (milliseconds: number): string => {
     .toString()
     .padStart(2, '0')}:${centiseconds.toString().padStart(2, '0')}`;
 };
+
+export const countGeneralTime = (splitTimers: {
+  [key: number]: { start: number; end: number | null };
+}) => {
+  let totalTime = 0;
+  Object.values(splitTimers).forEach((timer) => {
+    totalTime += timer.end ? timer.end - timer.start : 0;
+  });
+  return totalTime;
+};

@@ -6,7 +6,7 @@ import VerifyEmailForm from '@/components/auth/verify-email-form';
 const VerifyEmailPage = () => {
   const router = useRouter();
   return (
-    <section className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-gray-950 overflow-hidden">
+    <section className="flex h-screen min-h-screen flex-col items-center justify-center overflow-hidden">
       <VerifyEmailForm />
     </section>
   );

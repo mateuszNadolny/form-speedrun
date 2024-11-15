@@ -7,6 +7,21 @@ import { getUserById } from './lib/user';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.sub
+        }
+      };
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') {
         return true;

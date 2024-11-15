@@ -45,3 +45,13 @@ export const NewPasswordSchema = z
     message: "Passwords don't match",
     path: ['confirmPassword']
   });
+
+export const GameScoreSchema = z.object({
+  totalTime: z.number(),
+  splitTimes: z.array(
+    z.object({
+      label: z.string(),
+      time: z.number()
+    })
+  )
+});

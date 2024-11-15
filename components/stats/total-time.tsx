@@ -1,20 +1,12 @@
 import { useTimerStore } from '@/store/timer-store';
-import { formatTime } from '@/lib/time';
+import { formatTime, countGeneralTime } from '@/lib/time';
 
 import 'animate.css';
 
 const TotalTime = () => {
   const { splitTimers } = useTimerStore();
 
-  const countGeneralTime = () => {
-    let totalTime = 0;
-    Object.values(splitTimers).forEach((timer) => {
-      totalTime += timer.end ? timer.end - timer.start : 0;
-    });
-    return totalTime;
-  };
-
-  const totalTime = countGeneralTime();
+  const totalTime = countGeneralTime(splitTimers);
   return (
     <h2 className="ml-6 lg:ml-0 text-5xl text-color-light animate__animated animate__fadeInDown mb-8">
       Total Time:{' '}

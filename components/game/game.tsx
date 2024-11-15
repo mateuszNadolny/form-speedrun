@@ -1,20 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-import GameInput from './game-input';
-import GameWelcomeScreen from './game-welcome-screen';
-import GeneralTimer from './general-timer';
-import Statistics from '../stats/statistics';
+import GameInput from '@/components/game/game-input';
+import GameWelcomeScreen from '@/components/game/game-welcome-screen';
+import GeneralTimer from '@/components/game/general-timer';
+import Statistics from '@/components/stats/statistics';
 
 import { useTimerStore } from '@/store/timer-store';
 import { useInputStore } from '@/store/input-store';
+
+import { saveGameScore } from '@/actions/save-game-score';
 
 import { inputs } from '@/types/data';
 import { InputTypes } from '@/types/types';
 import { formatTime } from '@/lib/time';
 const Game = () => {
-  const [gameState, setGameState] = useState('idle'); // idle, playing, finished
+  const [gameState, setGameState] = useState('idle');
   const [currentInputIndex, setCurrentInputIndex] = useState(0);
   const [gameInputs, setGameInputs] = useState<InputTypes[]>([]);
   const { addEntry, resetEntries } = useInputStore();
@@ -24,18 +26,18 @@ const Game = () => {
     startSplitTimer,
     stopSplitTimer,
     resetTimers,
-    splitTimers
+    getSplitTime
   } = useTimerStore();
 
-  const shuffleAndSelectInputs = () => {
+  const shuffleAndSelectInputs = useCallback(() => {
     const shuffled = [...inputs].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 8).map((input) => ({
       ...input,
       value: input?.value?.toString() ?? ''
     }));
-  };
+  }, []);
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
     const selectedInputs = shuffleAndSelectInputs();
     setGameInputs(selectedInputs);
     setCurrentInputIndex(0);
@@ -44,28 +46,47 @@ const Game = () => {
     resetEntries();
     startGeneralTimer();
     startSplitTimer(0);
-  };
+  }, [shuffleAndSelectInputs, resetTimers, resetEntries, startGeneralTimer, startSplitTimer]);
 
-  const handleInputComplete = () => {
+  const handleInputComplete = useCallback(() => {
     stopSplitTimer(currentInputIndex);
     const currentInput = gameInputs[currentInputIndex];
-    const splitTime = splitTimers[currentInputIndex];
-    if (splitTime) {
-      const formattedTime = formatTime(Date.now() - splitTime.start);
-      addEntry(currentInput.label, formattedTime);
-    }
+    const splitTime = getSplitTime(currentInputIndex);
+    addEntry(currentInput.label, formatTime(splitTime));
 
-    if (currentInputIndex < gameInputs.length - 1) {
+    if (currentInputIndex === gameInputs.length - 1) {
+      stopGeneralTimer();
+      setGameState('finished');
+      handleSaveScore();
+    } else {
       setCurrentInputIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
         startSplitTimer(nextIndex);
         return nextIndex;
       });
-    } else {
-      stopGeneralTimer();
-      setGameState('finished');
     }
-  };
+  }, [
+    currentInputIndex,
+    gameInputs,
+    stopSplitTimer,
+    getSplitTime,
+    addEntry,
+    stopGeneralTimer,
+    startSplitTimer
+  ]);
+
+  const handleSaveScore = useCallback(async () => {
+    const totalTime = gameInputs.reduce((total, _, index) => total + getSplitTime(index), 0);
+    const splitTimes = gameInputs.map((input, index) => ({
+      label: input.label,
+      time: getSplitTime(index)
+    }));
+
+    const result = await saveGameScore({
+      totalTime,
+      splitTimes
+    });
+  }, [gameInputs, getSplitTime]);
 
   return (
     <div className="w-full h-screen flex flex-col items-start justify-center">

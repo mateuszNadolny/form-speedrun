@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 
+import { FormInputProps } from '@/types/types';
+
+import { formatDate } from '@/lib/time';
+
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
@@ -12,12 +16,10 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { FormInputProps } from '@/types/types';
-import PrimaryButton from '../ui/primary-button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import PrimaryButton from '@/components/ui/primary-button';
+import PasswordInput from '@/components/ui/password-input';
 
-import { formatDate } from '@/lib/time';
-import PasswordInput from '../ui/password-input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const FormInput = ({ input, onComplete }: FormInputProps) => {
   const [value, setValue] = useState('');

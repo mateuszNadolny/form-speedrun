@@ -11,7 +11,7 @@ const PlayAgainButton = () => {
   };
 
   return (
-    <div className="flex justify-center lg:absolute lg:bottom-10 lg:left-32 animate__animated animate__fadeInDown">
+    <div className="flex justify-center lg:absolute lg:bottom-[9rem] lg:left-32 animate__animated animate__fadeInDown">
       <PrimaryButton onClick={() => refreshPage()} className="flex gap-2 my-7">
         <RefreshCcwDot />
         Play again
