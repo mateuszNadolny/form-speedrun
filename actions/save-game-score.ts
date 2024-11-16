@@ -13,9 +13,7 @@ export async function saveGameScore(values: z.infer<typeof GameScoreSchema>) {
     }
 
     const session = await auth();
-    console.log('Session:', session);
-    if (!session?.user?.id) {
-      console.log('No user session found');
+      if (!session?.user?.id) {
       return { success: 'Score not saved - user not logged in' };
     }
 
@@ -37,11 +35,8 @@ export async function saveGameScore(values: z.infer<typeof GameScoreSchema>) {
       }
     });
 
-    console.log('Database save result:', savedScore);
-
     return {
-      success: 'Score saved successfully',
-      data: savedScore
+      success: 'Score saved successfully'
     };
   } catch (error) {
     console.error('Error saving score:', error);

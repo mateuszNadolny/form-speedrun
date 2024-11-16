@@ -1,9 +1,10 @@
 'use client';
 
-import { RefreshCcwDot } from 'lucide-react';
+import { Play, Trophy } from 'lucide-react';
 import PrimaryButton from '../ui/primary-button';
 
 import 'animate.css';
+import Link from 'next/link';
 
 const PlayAgainButton = () => {
   const refreshPage = () => {
@@ -11,10 +12,14 @@ const PlayAgainButton = () => {
   };
 
   return (
-    <div className="flex justify-center lg:absolute lg:bottom-[9rem] lg:left-32 animate__animated animate__fadeInDown">
+    <div className="flex justify-center lg:absolute lg:bottom-[9rem] gap-5 lg:left-32 animate__animated animate__fadeInDown">
       <PrimaryButton onClick={() => refreshPage()} className="flex gap-2 my-7">
-        <RefreshCcwDot />
+        <Play />
         Play again
+      </PrimaryButton>
+      <PrimaryButton className="flex gap-2 my-7">
+        <Trophy />
+        <Link href={'/scoreboard'}>Scoreboard</Link>
       </PrimaryButton>
     </div>
   );
