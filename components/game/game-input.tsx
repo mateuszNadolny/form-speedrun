@@ -90,7 +90,6 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
             <Label className="text-4xl font-medium text-color-teritary">{value ? value : 0}</Label>
             <input
               className="w-[250px] lg:w-[300px]"
-              defaultValue={0}
               type="range"
               min={input.min}
               max={input.max}
