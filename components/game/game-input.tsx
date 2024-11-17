@@ -23,6 +23,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const FormInput = ({ input, onComplete }: FormInputProps) => {
   const [value, setValue] = useState('');
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value === input.value) {
@@ -38,6 +43,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <Textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onPaste={handlePaste}
             className="border-1 p-2 text-lg lg:text-xl rounded-xl border-color-teritary bg-color-secondary text-color-light w-[90%] lg:w-full my-2"
             required
           />
@@ -143,9 +149,8 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <PasswordInput
             className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
             value={value}
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
+            onChange={(e) => setValue(e.target.value)}
+            onPaste={handlePaste}
             required
           />
         );
@@ -154,9 +159,8 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <input
             type={input.type}
             value={value}
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
+            onChange={(e) => setValue(e.target.value)}
+            onPaste={handlePaste}
             className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
             required
           />
