@@ -1,11 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-
 import { FormInputProps } from '@/types/types';
-
 import { formatDate } from '@/lib/time';
-
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
@@ -18,7 +15,6 @@ import {
 } from '@/components/ui/select';
 import PrimaryButton from '@/components/ui/primary-button';
 import PasswordInput from '@/components/ui/password-input';
-
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const FormInput = ({ input, onComplete }: FormInputProps) => {
@@ -30,10 +26,17 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (value === input.value) {
+    if (isValueMatch()) {
       onComplete();
       setValue('');
     }
+  };
+
+  const isValueMatch = () => {
+    if (input.type === 'number' || input.type === 'range') {
+      return parseFloat(value) === parseFloat(input.value as string);
+    }
+    return value === input.value;
   };
 
   const renderInput = () => {
@@ -99,50 +102,44 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
               type="range"
               min={input.min}
               max={input.max}
-              value={value ? value : 0}
+              value={value}
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
         );
       case 'date':
         return (
-          <>
-            <input
-              type="date"
-              id="date"
-              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-              }}
-            />
-          </>
+          <input
+            type="date"
+            id="date"
+            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+          />
         );
       case 'time':
         return (
-          <>
-            <input
-              type="time"
-              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-              }}
-            />
-          </>
+          <input
+            type="time"
+            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+          />
         );
       case 'color':
         return (
-          <>
-            <input
-              type="color"
-              className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100px] h-[100px] my-2"
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-              }}
-            />
-          </>
+          <input
+            type="color"
+            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100px] h-[100px] my-2"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+          />
         );
       case 'password':
         return (
@@ -188,7 +185,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
       <PrimaryButton
         type="submit"
         className="bg-color-teritary w-[150px] text-color-light text-[18.33px]"
-        disabled={input.value !== value}>
+        disabled={!isValueMatch()}>
         Submit
       </PrimaryButton>
     </form>

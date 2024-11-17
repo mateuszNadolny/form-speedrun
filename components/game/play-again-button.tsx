@@ -6,14 +6,18 @@ import PrimaryButton from '../ui/primary-button';
 import 'animate.css';
 import Link from 'next/link';
 
-const PlayAgainButton = () => {
+interface PlayAgainButtonProps {
+  resetGame: () => void;
+}
+
+const PlayAgainButton = ({ resetGame }: PlayAgainButtonProps) => {
   const refreshPage = () => {
     window.location.reload();
   };
 
   return (
     <div className="flex justify-center lg:absolute lg:bottom-[9rem] gap-5 lg:left-32 animate__animated animate__fadeInDown">
-      <PrimaryButton onClick={() => refreshPage()} className="flex gap-2 my-7">
+      <PrimaryButton onClick={resetGame} className="flex gap-2 my-7">
         <Play />
         Play again
       </PrimaryButton>

@@ -8,11 +8,11 @@ import Statistics from '@/components/stats/statistics';
 import { useTimerStore } from '@/store/timer-store';
 import { useInputStore } from '@/store/input-store';
 import { saveGameScore } from '@/actions/save-game-score';
-import { inputs } from '@/types/data';
 import { InputTypes } from '@/types/types';
 import { formatTime } from '@/lib/time';
+import { generateInputs } from '@/types/data';
 
-export default function Game() {
+const Game = () => {
   const [gameState, setGameState] = useState('idle');
   const [currentInputIndex, setCurrentInputIndex] = useState(0);
   const [gameInputs, setGameInputs] = useState<InputTypes[]>([]);
@@ -26,29 +26,39 @@ export default function Game() {
     getSplitTime
   } = useTimerStore();
 
+  const generateGameInputs = useCallback(() => {
+    const allInputs = generateInputs();
+    const shuffled = [...allInputs].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 8);
+  }, []);
+
+  const resetGame = useCallback(() => {
+    setGameState('idle');
+    setCurrentInputIndex(0);
+    resetTimers();
+    resetEntries();
+    setGameInputs([]);
+  }, [resetTimers, resetEntries]);
+
+  useEffect(() => {
+    resetGame();
+  }, [resetGame]);
+
   useEffect(() => {
     if (gameState === 'playing') {
       startSplitTimer(currentInputIndex);
     }
   }, [currentInputIndex, gameState, startSplitTimer]);
 
-  const shuffleAndSelectInputs = useCallback(() => {
-    const shuffled = [...inputs].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 8).map((input) => ({
-      ...input,
-      value: input?.value?.toString() ?? ''
-    }));
-  }, []);
-
   const startGame = useCallback(() => {
-    const selectedInputs = shuffleAndSelectInputs();
-    setGameInputs(selectedInputs);
+    const newGameInputs = generateGameInputs();
+    setGameInputs(newGameInputs);
     setCurrentInputIndex(0);
     setGameState('playing');
     resetTimers();
     resetEntries();
     startGeneralTimer();
-  }, [shuffleAndSelectInputs, resetTimers, resetEntries, startGeneralTimer]);
+  }, [generateGameInputs, resetTimers, resetEntries, startGeneralTimer]);
 
   const handleSaveScore = useCallback(async () => {
     const totalTime = gameInputs.reduce((total, _, index) => total + getSplitTime(index), 0);
@@ -100,7 +110,9 @@ export default function Game() {
           </div>
         </div>
       )}
-      {gameState === 'finished' && <Statistics />}
+      {gameState === 'finished' && <Statistics startGame={startGame} />}
     </div>
   );
-}
+};
+
+export default Game;
