@@ -75,7 +75,7 @@ export const columns: ColumnDef<Score>[] = [
               <table className="min-w-full divide-y divide-gray-700">
                 <thead>
                   <tr>
-                    <th className="text-left text-color-light py-2 px-4">Label</th>
+                    <th className="text-left text-color-light py-2 px-4">Input type</th>
                     <th className="text-left text-color-light py-2 px-4">Time</th>
                   </tr>
                 </thead>
