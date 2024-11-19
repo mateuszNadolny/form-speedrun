@@ -8,16 +8,6 @@ interface User {
   name: string;
   image: string | null;
   createdAt: Date;
-  // scores: {
-  //   id: string;
-  //   totalTime: number;
-  //   createdAt: Date;
-  //   splitTimes: {
-  //     id: string;
-  //     label: string;
-  //     time: number;
-  //   }[];
-  // }[];
 }
 
 const ProfileHeader = ({ name, image, createdAt }: User) => {

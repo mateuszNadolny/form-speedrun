@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { getUserProfileData } from '@/actions/get-user-profile-data';
 import ProfileHeader from '@/components/profile/profile-header';
-
+import ProfileStatsWrapper from '@/components/profile/profile-stats-wrapper';
+import { getUserProfileData } from '@/actions/get-user-profile-data';
 interface ProfilePageProps {
   params: {
     publicId: string;
@@ -17,6 +17,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   return (
     <section className="flex flex-col w-full h-screen max-h-screen p-32">
       <ProfileHeader name={user.name} image={user.image} createdAt={user.createdAt} />
+      <ProfileStatsWrapper scores={user.scores} />
     </section>
   );
 }
