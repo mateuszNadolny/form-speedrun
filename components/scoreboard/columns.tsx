@@ -74,16 +74,26 @@ export const columns: ColumnDef<Score>[] = [
           <DropdownMenuContent
             align="end"
             className="bg-gray-800 border-gray-800/50 p-5 rounded-lg shadow-lg">
-            <ol className="space-y-4">
-              {splitTimes.map((splitTime, index) => (
-                <li key={index} className="text-color-light text-sm">
-                  {index + 1}. {splitTime.label}:{' '}
-                  <span className="font-extrabold text-color-teritary">
-                    {formatTime(splitTime.time)}
-                  </span>
-                </li>
-              ))}
-            </ol>
+            <div className="overflow-auto">
+              <table className="min-w-full divide-y divide-gray-700">
+                <thead>
+                  <tr>
+                    <th className="text-left text-color-light py-2 px-4">Label</th>
+                    <th className="text-left text-color-light py-2 px-4">Time</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-600">
+                  {splitTimes.map((splitTime, index) => (
+                    <tr key={index} className="hover:bg-gray-700">
+                      <td className="text-color-light py-2 px-4">{splitTime.label}</td>
+                      <td className="text-color-teritary font-extrabold py-2 px-4">
+                        {formatTime(splitTime.time)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       );
