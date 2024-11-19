@@ -1,6 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Share2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface User {
   name: string;
@@ -20,10 +22,23 @@ interface User {
 
 const ProfileHeader = ({ name, image, createdAt }: User) => {
   return (
-    <div className="w-full mb-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-full mb-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-20 h-20 rounded-full bg-gray-800 border-2 border-color-teritary flex items-center justify-center">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 20,
+              delay: 0.2
+            }}
+            className="w-20 h-20 rounded-full bg-gray-800 border-2 border-color-teritary flex items-center justify-center">
             <Avatar>
               <AvatarImage
                 src={(image as string) ?? ''}
@@ -34,21 +49,27 @@ const ProfileHeader = ({ name, image, createdAt }: User) => {
                 {name.charAt(0)}
               </AvatarFallback>
             </Avatar>
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}>
             <h1 className="text-3xl font-bold text-color-teritary">{name}</h1>
             <p className="text-gray-400">
               Speedrunning since{' '}
               {createdAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </p>
-          </div>
+          </motion.div>
         </div>
-        <button className="flex items-center text-color-light gap-2 bg-gray-800 hover:bg-gray-700 transition px-4 py-2 rounded-lg">
-          <Share2 size={18} className="text-[#2dd4bf]" />
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center text-color-light gap-2 bg-gray-800 hover:bg-gray-700 transition px-4 py-2 rounded-lg">
+          <Share2 size={18} className="text-color-teritary" />
           Share Profile
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 export default ProfileHeader;
