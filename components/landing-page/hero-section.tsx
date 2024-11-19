@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import LandingPageCardSection from '@/components/landing-page/landing-page-card-section';
 import PrimaryButton from '@/components/ui/primary-button';
-import TodayStats from '@/components/landing-page/today-stats';
+import TodayStatsWrapper from '@/components/landing-page/today-stats-wrapper';
 
 const HeroSection = () => {
   return (
@@ -24,7 +24,7 @@ const HeroSection = () => {
           <Link href={'/game'}>{`Let's get started`}</Link>
         </PrimaryButton>
       </div>
-      <TodayStats />
+      <TodayStatsWrapper />
     </div>
   );
 };
