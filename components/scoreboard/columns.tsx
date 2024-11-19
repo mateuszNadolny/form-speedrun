@@ -3,11 +3,29 @@ import Image from 'next/image';
 
 import { ColumnDef } from '@tanstack/react-table';
 
+import { MoreHorizontal } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator
+} from '@/components/ui/dropdown-menu';
+
 import { formatTime } from '@/lib/time';
+
+type SplitTime = {
+  label: string;
+  time: number;
+};
 
 export type Score = {
   id: string;
   username: string;
+  splitTimes: SplitTime[];
   time: number;
   createdAt: string;
   image: string;
@@ -37,6 +55,38 @@ export const columns: ColumnDef<Score>[] = [
     cell: ({ row }) => {
       const time = row.getValue('time');
       return <div className="text-color-light">{formatTime(time as number)}</div>;
+    }
+  },
+  {
+    id: 'actions',
+    header: 'Split Times',
+    cell: ({ row }) => {
+      const { splitTimes } = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-color-teritary">
+              <span className="sr-only">See more</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="bg-gray-800 border-gray-800/50 p-5 rounded-lg shadow-lg">
+            <ol className="space-y-4">
+              {splitTimes.map((splitTime, index) => (
+                <li key={index} className="text-color-light text-sm">
+                  {index + 1}. {splitTime.label}:{' '}
+                  <span className="font-extrabold text-color-teritary">
+                    {formatTime(splitTime.time)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
     }
   },
   {
