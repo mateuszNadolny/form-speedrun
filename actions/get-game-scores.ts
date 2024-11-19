@@ -18,7 +18,8 @@ export async function getGameScores() {
         user: {
           select: {
             name: true,
-            image: true
+            image: true,
+            publicId: true
           }
         }
       },
@@ -34,6 +35,7 @@ export async function getGameScores() {
       splitTimes: score.splitTimes,
       time: score.totalTime,
       image: score.user.image ?? '/default-avatar.png',
+      publicId: score.user.publicId,
       createdAt: score.createdAt.toISOString()
     }));
   } catch (error) {

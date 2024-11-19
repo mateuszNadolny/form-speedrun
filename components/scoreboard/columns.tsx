@@ -1,10 +1,12 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { ColumnDef } from '@tanstack/react-table';
 
 import { MoreHorizontal } from 'lucide-react';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -22,6 +24,7 @@ type SplitTime = {
 export type Score = {
   id: string;
   username: string;
+  publicId: string | null;
   splitTimes: SplitTime[];
   time: number;
   createdAt: string;
@@ -102,17 +105,23 @@ export const columns: ColumnDef<Score>[] = [
     cell: ({ row }) => {
       const image = row.original.image;
       const username = row.getValue('username');
+      const publicId = row.original.publicId;
       return (
-        <div className="flex items-center gap-3">
-          <Image
-            src={image}
-            alt={`${username}'s avatar`}
-            width={20}
-            height={20}
-            className="rounded-full"
-          />
+        <Link
+          href={`/profile/${publicId}`}
+          className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <Avatar>
+            <AvatarImage
+              src={(image as string) ?? ''}
+              alt={'user profile picture'}
+              className="w-6 h-6 rounded-full"
+            />
+            <AvatarFallback className="w-6 h-6 tex rounded-full bg-gray-800 border-2 border-color-teritary">
+              {(username as string).charAt(0)}
+            </AvatarFallback>
+          </Avatar>
           <div className="text-color-light">{username as string}</div>
-        </div>
+        </Link>
       );
     }
   },
