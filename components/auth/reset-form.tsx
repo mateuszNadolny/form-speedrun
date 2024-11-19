@@ -1,14 +1,18 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { ResetSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
 import { resetPassword } from '@/actions/reset';
+import { useMutation } from '@tanstack/react-query';
+
+import { CustomError } from '@/types/types';
+import useAuthLoadingStore from '@/store/auth-store';
 
 import { useToast } from '@/components/ui/use-toast';
-import PrimaryButton from '../ui/primary-button';
+import PrimaryButton from '@/components/ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
@@ -20,11 +24,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
-import { useMutation } from '@tanstack/react-query';
-
-import useAuthLoadingStore from '@/store/auth-store';
-
-import { CustomError } from '@/types/types';
 
 const ResetForm = () => {
   const { loading, setIsLoading } = useAuthLoadingStore();

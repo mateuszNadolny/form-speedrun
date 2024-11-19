@@ -4,12 +4,12 @@ import { signIn } from 'next-auth/react';
 
 import { useSearchParams } from 'next/navigation';
 
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
-import ProvidersError from './providers-error';
-import { Button } from '../ui/button';
-
-import { FaGithub, FaGoogle } from 'react-icons/fa';
+import ProvidersError from '@/components/auth/providers-error';
+import { Button } from '@/components/ui/button';
 
 const ProvidersSelector = () => {
   const searchParams = useSearchParams();

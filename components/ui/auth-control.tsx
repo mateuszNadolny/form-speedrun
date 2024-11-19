@@ -1,5 +1,5 @@
-import SigninButton from './signin-button';
-import UserDropdown from './user-dropdown';
+import SigninButton from '@/components/ui/signin-button';
+import UserDropdown from '@/components/ui/user-dropdown';
 
 interface AuthControlProps {
   isAuthenticated: boolean;

@@ -1,6 +1,6 @@
 import 'animate.css';
 import PrimaryButton from '@/components/ui/primary-button';
-import GameInstruction from './game-instruction';
+import GameInstruction from '@/components/game/game-instruction';
 import { Play } from 'lucide-react';
 
 interface GameWelcomeScreenProps {

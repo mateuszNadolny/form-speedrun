@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { formatTime } from '@/lib/time';
 import { useTimerStore } from '@/store/timer-store';
+import { formatTime } from '@/lib/time';
 
 const GeneralTimer = () => {
   const [elapsedTime, setElapsedTime] = useState(0);

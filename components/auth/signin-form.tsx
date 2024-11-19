@@ -1,17 +1,17 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-
-import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '@/schemas';
-
 import { login } from '@/actions/login';
-
+import useAuthLoadingStore from '@/store/auth-store';
+import { CustomError } from '@/types/types';
 import { useToast } from '@/components/ui/use-toast';
-import PrimaryButton from '../ui/primary-button';
-
+import PrimaryButton from '@/components/ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,12 +24,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
-import { useMutation } from '@tanstack/react-query';
-
-import useAuthLoadingStore from '@/store/auth-store';
-
-import { CustomError } from '@/types/types';
-import Link from 'next/link';
 
 const SigninForm = () => {
   const router = useRouter();

@@ -1,17 +1,19 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { useSearchParams } from 'next/navigation';
-import { NewPasswordSchema } from '@/schemas';
+import { useMutation } from '@tanstack/react-query';
 
 import { newPassword } from '@/actions/new-password';
+import { CustomError } from '@/types/types';
+import { NewPasswordSchema } from '@/schemas/index';
 
 import { useToast } from '@/components/ui/use-toast';
-import PrimaryButton from '../ui/primary-button';
+import PrimaryButton from '@/components/ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
@@ -23,11 +25,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { LuLoader2 } from 'react-icons/lu';
-import { useMutation } from '@tanstack/react-query';
 
 import useAuthLoadingStore from '@/store/auth-store';
-
-import { CustomError } from '@/types/types';
 
 const NewPasswordForm = () => {
   const router = useRouter();

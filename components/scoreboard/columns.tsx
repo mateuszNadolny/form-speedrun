@@ -9,10 +9,7 @@ import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
 import { formatTime } from '@/lib/time';

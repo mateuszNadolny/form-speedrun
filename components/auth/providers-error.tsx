@@ -1,5 +1,4 @@
 import { CircleAlert } from 'lucide-react';
-import React from 'react';
 
 const ProvidersError = ({ message }: { message: string }) => {
   if (!message) return null;

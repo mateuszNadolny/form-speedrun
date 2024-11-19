@@ -1,19 +1,13 @@
+import { CustomError } from '@/types/types';
+import { LuLoader2 } from 'react-icons/lu';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToast } from '@/components/ui/use-toast';
+import { newVerification } from '@/actions/new-verification';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-
-import { newVerification } from '@/actions/new-verification';
-
-import { useToast } from '@/components/ui/use-toast';
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-
-import { LuLoader2 } from 'react-icons/lu';
 import { useMutation } from '@tanstack/react-query';
-
 import useAuthLoadingStore from '@/store/auth-store';
-
-import { CustomError } from '@/types/types';
 
 const VerifyEmailForm = () => {
   const searchParams = useSearchParams();

@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
+
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 
 interface NavbarWrapperProps {
   children: React.ReactNode;

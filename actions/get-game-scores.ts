@@ -1,6 +1,5 @@
 'use server';
 
-import SplitTimes from '@/components/stats/split-time';
 import prisma from '@/lib/prismadb';
 
 export async function getGameScores() {

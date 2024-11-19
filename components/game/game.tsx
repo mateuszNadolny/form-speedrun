@@ -9,8 +9,8 @@ import { useTimerStore } from '@/store/timer-store';
 import { useInputStore } from '@/store/input-store';
 import { saveGameScore } from '@/actions/save-game-score';
 import { InputTypes } from '@/types/types';
-import { formatTime } from '@/lib/time';
 import { generateInputs } from '@/types/data';
+import { formatTime } from '@/lib/time';
 
 const Game = () => {
   const [gameState, setGameState] = useState('idle');

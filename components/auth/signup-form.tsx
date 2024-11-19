@@ -2,17 +2,17 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useMutation } from '@tanstack/react-query';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RegisterSchema } from '@/schemas';
 
+import { useMutation } from '@tanstack/react-query';
+
 import { useToast } from '@/components/ui/use-toast';
 
 import useAuthLoadingStore from '@/store/auth-store';
-import PrimaryButton from '../ui/primary-button';
+import PrimaryButton from '@/components/ui/primary-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,

@@ -1,8 +1,8 @@
-import ConfettiTrigger from '../ui/confetti';
-import Chart from './charts';
-import SplitTimes from './split-time';
-import TotalTime from './total-time';
-import PlayAgainButton from '../game/play-again-button';
+import ConfettiTrigger from '@/components/ui/confetti';
+import Chart from '@/components/stats/charts';
+import SplitTimes from '@/components/stats//split-time';
+import TotalTime from '@/components/stats//total-time';
+import PlayAgainButton from '@/components/game/play-again-button';
 
 interface StatisticsProps {
   startGame: () => void;

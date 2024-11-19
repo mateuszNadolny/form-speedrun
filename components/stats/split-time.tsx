@@ -1,10 +1,11 @@
 'use client';
 
+import 'animate.css';
+
 import { useTimerStore } from '@/store/timer-store';
 import { useInputStore } from '@/store/input-store';
 import { formatTime } from '@/lib/time';
 
-import 'animate.css';
 import { ChevronsRight } from 'lucide-react';
 
 const SplitTimes = () => {

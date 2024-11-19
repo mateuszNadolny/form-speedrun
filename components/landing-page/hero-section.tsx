@@ -2,9 +2,9 @@ import 'animate.css';
 
 import Link from 'next/link';
 
-import LandingPageCardSection from './landing-page-card-section';
-import PrimaryButton from '../ui/primary-button';
-import TodayStats from './today-stats';
+import LandingPageCardSection from '@/components/landing-page/landing-page-card-section';
+import PrimaryButton from '@/components/ui/primary-button';
+import TodayStats from '@/components/landing-page/today-stats';
 
 const HeroSection = () => {
   return (

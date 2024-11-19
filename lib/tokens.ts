@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '@/lib/prismadb';
-import { getVerificationTokenByEmail } from './verification-token';
-import { getPasswordResetTokenByEmail } from './password-reset-token';
+import { getVerificationTokenByEmail } from '@/lib/verification-token';
+import { getPasswordResetTokenByEmail } from '@/lib/password-reset-token';
 
 export const generateVerificationToken = async (email: string) => {
   const token = uuidv4();

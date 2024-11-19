@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import LandingPageCard from './landing-page-card';
+import LandingPageCard from '@/components/landing-page/landing-page-card';
 
 const CARD_DATA = [
   {

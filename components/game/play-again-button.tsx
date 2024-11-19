@@ -1,7 +1,7 @@
 'use client';
 
 import { Play, Trophy } from 'lucide-react';
-import PrimaryButton from '../ui/primary-button';
+import PrimaryButton from '@/components/ui/primary-button';
 
 import 'animate.css';
 import Link from 'next/link';
