@@ -3,7 +3,8 @@ import authConfig from './auth.config';
 
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from '@/lib/prismadb';
-import { getUserById } from './lib/user';
+import { getUserById } from '@/lib/user';
+import { generatePublicId } from '@/lib/publicid';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
@@ -45,7 +46,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           id: user.id
         },
         data: {
-          emailVerified: new Date()
+          emailVerified: new Date(),
+          publicId: generatePublicId(user.name || 'user')
         }
       });
     }

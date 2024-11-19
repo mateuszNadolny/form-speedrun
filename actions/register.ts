@@ -6,6 +6,7 @@ import { z } from 'zod';
 import prisma from '@/lib/prismadb';
 
 import { getUserByEmail } from '@/lib/user';
+import { generatePublicId } from '@/lib/publicid';
 import { RegisterSchema } from '@/schemas';
 import { AuthError } from 'next-auth';
 
@@ -31,12 +32,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
+    const publicId = generatePublicId(name);
 
     const user = await prisma.user.create({
       data: {
         email,
         name,
-        hashedPassword
+        hashedPassword,
+        publicId
       }
     });
 
