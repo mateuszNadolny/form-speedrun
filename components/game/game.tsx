@@ -110,7 +110,7 @@ const Game = () => {
           </div>
         </div>
       )}
-      {gameState === 'finished' && <Statistics startGame={startGame} />}
+      {gameState === 'finished' && <Statistics resetGame={resetGame} />}
     </div>
   );
 };

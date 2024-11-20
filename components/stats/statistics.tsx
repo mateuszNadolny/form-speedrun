@@ -5,10 +5,10 @@ import TotalTime from '@/components/stats//total-time';
 import PlayAgainButton from '@/components/game/play-again-button';
 
 interface StatisticsProps {
-  startGame: () => void;
+  resetGame: () => void;
 }
 
-const Statistics = ({ startGame }: StatisticsProps) => {
+const Statistics = ({ resetGame }: StatisticsProps) => {
   return (
     <ConfettiTrigger>
       <div className="w-screen max-w-screen min-h-screen mt-48 lg:mb-0 lg:mt-0 flex flex-col lg:flex-row items-center justify-start lg:px-32">
@@ -17,7 +17,7 @@ const Statistics = ({ startGame }: StatisticsProps) => {
           <SplitTimes />
         </div>
         <Chart />
-        <PlayAgainButton resetGame={startGame} />
+        <PlayAgainButton resetGame={resetGame} />
       </div>
     </ConfettiTrigger>
   );
