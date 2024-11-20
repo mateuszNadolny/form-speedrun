@@ -15,7 +15,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     notFound();
   }
   return (
-    <section className="flex flex-col w-full h-screen max-h-screen p-32">
+    <section className="flex flex-col w-full h-screen max-h-screen pt-20 px-5 lg:p-32">
       <ProfileHeader name={user.name} image={user.image} createdAt={user.createdAt} />
       <ProfileStatsWrapper scores={user.scores} />
     </section>

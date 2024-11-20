@@ -1,7 +1,9 @@
 'use client';
-import ProfileStatsCard from '@/components/profile/profile-stats-card';
 
+import ProfileStatsCard from '@/components/profile/profile-stats-card';
+import { motion } from 'framer-motion';
 import { Trophy, Clock, Zap, CalendarCheck } from 'lucide-react';
+
 interface ProfileStatsWrapperProps {
   scores: {
     id: string;
@@ -26,13 +28,49 @@ const ProfileStatsWrapper = ({ scores }: ProfileStatsWrapperProps) => {
     year: 'numeric'
   }).format(new Date(scores[scores.length - 1].createdAt));
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        bounce: 0.4,
+        duration: 0.8
+      }
+    }
+  };
+
   return (
-    <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-8">
-      <ProfileStatsCard icon={Trophy} title="Best Time" value={bestTime} />
-      <ProfileStatsCard icon={Clock} title="Average Time" value={averageTime} />
-      <ProfileStatsCard icon={Zap} title="Total Runs" value={totalRuns.toString()} />
-      <ProfileStatsCard icon={CalendarCheck} title="Last Run" value={lastRunDate} />
-    </div>
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="w-full mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-10 mb-8 mt-4 lg:mt-0">
+      <motion.div variants={item}>
+        <ProfileStatsCard icon={Trophy} title="Best Time" value={bestTime} />
+      </motion.div>
+      <motion.div variants={item}>
+        <ProfileStatsCard icon={Clock} title="Average Time" value={averageTime} />
+      </motion.div>
+      <motion.div variants={item}>
+        <ProfileStatsCard icon={Zap} title="Total Runs" value={totalRuns.toString()} />
+      </motion.div>
+      <motion.div variants={item}>
+        <ProfileStatsCard icon={CalendarCheck} title="Last Run" value={lastRunDate} />
+      </motion.div>
+    </motion.div>
   );
 };
+
 export default ProfileStatsWrapper;

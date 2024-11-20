@@ -51,7 +51,7 @@ const ScoreboardTable = <TData, TValue>({ columns, data }: DataTableProps<TData,
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
                   key={headerGroup.id}
-                  className="grid grid-cols-[100px_1fr_1fr_3fr_1fr] border-b border-gray-700/50">
+                  className="grid grid-cols-[50px_1fr_1fr_3fr_1fr] lg:grid-cols-[100px_1fr_1fr_3fr_1fr] border-b border-gray-700/50">
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id} className="flex items-center h-14">
@@ -77,7 +77,7 @@ const ScoreboardTable = <TData, TValue>({ columns, data }: DataTableProps<TData,
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.3 }}
                     key={row.id}
-                    className="grid grid-cols-[100px_1fr_1fr_3fr_1fr] text-color-light hover:bg-gray-800/30 transition-colors">
+                    className="grid grid-cols-[50px_1fr_1fr_3fr_1fr] lg:grid-cols-[100px_1fr_1fr_3fr_1fr] text-color-light hover:bg-gray-800/30 transition-colors">
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="py-4">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -14,15 +14,15 @@ interface ProfileStatsCardProps {
 const ProfileStatsCard = ({ icon: Icon, title, value }: ProfileStatsCardProps) => {
   return (
     <motion.div>
-      <div className="bg-gray-800/50 rounded-xl p-6">
+      <div className="bg-gray-800/50 rounded-xl p-4 lg:p-6">
         <div className="flex items-center gap-3 mb-2">
           <Icon className="w-5 h-5 text-color-teritary" />
-          <h3 className="font-semibold text-color-light">{title}</h3>
+          <h3 className="font-semibold text-sm lg:text-lg text-color-light">{title}</h3>
         </div>
         {typeof value === 'number' ? (
-          <p className="text-3xl font-bold text-color-light">{formatTime(value)}</p>
+          <p className="text-xl lg:text-3xl font-bold text-color-light">{formatTime(value)}</p>
         ) : (
-          <p className="text-3xl font-bold text-color-light">{value}</p>
+          <p className="text-xl lg:text-3xl font-bold text-color-light">{value}</p>
         )}
       </div>
     </motion.div>
