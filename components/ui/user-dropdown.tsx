@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { signOut, auth } from '@/auth';
 
 import { Button } from '@/components/ui/button';
@@ -9,11 +10,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+
+import { getUserById } from '@/lib/user';
+
 import { Settings, User, LogOut } from 'lucide-react';
 import { FaUser } from 'react-icons/fa';
 
 const UserDropdown = async () => {
   const session = await auth();
+  const user = await getUserById(session?.user?.id as string);
+  const publicId = user?.publicId;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,7 +30,7 @@ const UserDropdown = async () => {
           <FaUser className="text-color-teritary hover:opacity-70" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-gray-800/50 border-gray-700" align="end" forceMount>
+      <DropdownMenuContent className="w-56 bg-gray-800 border-gray-700" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium text-color-light">{session?.user?.name}</p>
@@ -33,8 +39,10 @@ const UserDropdown = async () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-gray-700" />
         <DropdownMenuItem>
-          <User className="mr-2 h-4 w-4" />
-          <span>Profile</span>
+          <Link href={`/profile/${publicId}`} className="w-full flex">
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Settings className="mr-2 h-4 w-4" />
