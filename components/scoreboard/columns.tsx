@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { ColumnDef } from '@tanstack/react-table';
@@ -24,7 +23,7 @@ type SplitTime = {
 export type Score = {
   id: string;
   username: string;
-  publicId: string | null;
+  publicId?: string | null;
   splitTimes: SplitTime[];
   time: number;
   createdAt: string;

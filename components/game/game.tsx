@@ -13,7 +13,7 @@ import { generateInputs } from '@/types/data';
 import { formatTime } from '@/lib/time';
 
 const Game = () => {
-  const [gameState, setGameState] = useState('idle');
+  const [gameState, setGameState] = useState('idle'); //idle, playing, finished
   const [currentInputIndex, setCurrentInputIndex] = useState(0);
   const [gameInputs, setGameInputs] = useState<InputTypes[]>([]);
   const { addEntry, resetEntries } = useInputStore();

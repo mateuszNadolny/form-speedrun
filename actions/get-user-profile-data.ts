@@ -1,5 +1,3 @@
-// get user data
-
 import prisma from '@/lib/prismadb';
 
 import { auth } from '@/auth';

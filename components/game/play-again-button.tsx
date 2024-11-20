@@ -11,10 +11,6 @@ interface PlayAgainButtonProps {
 }
 
 const PlayAgainButton = ({ resetGame }: PlayAgainButtonProps) => {
-  const refreshPage = () => {
-    window.location.reload();
-  };
-
   return (
     <div className="flex justify-center lg:absolute lg:bottom-[9rem] gap-5 lg:left-32 animate__animated animate__fadeInDown">
       <PrimaryButton onClick={resetGame} className="flex gap-2 my-7">

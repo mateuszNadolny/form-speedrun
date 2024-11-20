@@ -23,9 +23,14 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  pageSize?: number;
 }
 
-const ScoreboardTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+const ScoreboardTable = <TData, TValue>({
+  columns,
+  data,
+  pageSize
+}: DataTableProps<TData, TValue>) => {
   const table = useReactTable({
     data,
     columns,
@@ -33,13 +38,13 @@ const ScoreboardTable = <TData, TValue>({ columns, data }: DataTableProps<TData,
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       pagination: {
-        pageSize: 10
+        pageSize: pageSize || 10
       }
     }
   });
 
   return (
-    <div className="rounded-md max-w-[90%] lg:max-w-[70%] lg:w-[70%]">
+    <div className="rounded-md w-full">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

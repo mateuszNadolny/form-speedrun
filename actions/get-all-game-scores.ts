@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prismadb';
 
-export async function getGameScores() {
+export async function getAllGameScores() {
   try {
     const scores = await prisma.userScore.findMany({
       select: {
@@ -19,6 +19,7 @@ export async function getGameScores() {
           select: {
             name: true,
             image: true,
+            createdAt: true,
             publicId: true
           }
         }

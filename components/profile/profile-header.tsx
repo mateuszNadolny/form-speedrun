@@ -1,6 +1,7 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useToast } from '@/components/ui/use-toast';
 import { Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -8,9 +9,19 @@ interface User {
   name: string;
   image: string | null;
   createdAt: Date;
+  publicId: string;
 }
 
-const ProfileHeader = ({ name, image, createdAt }: User) => {
+const ProfileHeader = ({ name, image, createdAt, publicId }: User) => {
+  const { toast } = useToast();
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${window.location.origin}/profile/${publicId}`);
+    toast({
+      title: '📎 Copied to clipboard',
+      description: 'Profile link copied to clipboard'
+    });
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -55,6 +66,7 @@ const ProfileHeader = ({ name, image, createdAt }: User) => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={handleCopy}
           className="flex items-center text-color-light gap-2 bg-gray-800 hover:bg-gray-700 transition px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base mt-2 sm:mt-0">
           <Share2 size={16} className="text-color-teritary sm:size-18" />
           Share Profile

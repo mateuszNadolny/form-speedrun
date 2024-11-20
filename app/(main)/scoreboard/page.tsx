@@ -9,12 +9,13 @@ import PrimaryButton from '@/components/ui/primary-button';
 import { columns, Score } from '@/components/scoreboard/columns';
 import ScoreboardTable from '@/components/scoreboard/scoreboard-table';
 
-import { getGameScores } from '@/actions/get-game-scores';
+import { getUserById } from '@/lib/user';
+import { getAllGameScores } from '@/actions/get-all-game-scores';
 
 import { Play, User } from 'lucide-react';
 
 async function getData(): Promise<Score[]> {
-  const scores = await getGameScores();
+  const scores = await getAllGameScores();
   return scores;
 }
 
@@ -37,9 +38,11 @@ async function ScoreboardContent() {
 
 const ScoreboardPage = async () => {
   const session = await auth();
+  const user = await getUserById(session?.user?.id as string);
+  const publicId = user?.publicId;
 
   return (
-    <section className="flex h-screen min-h-screen flex-col items-center justify-start touch-auto overflow-scroll lg:overflow-hidden py-24">
+    <section className="flex h-screen min-h-screen flex-col items-center justify-start touch-auto overflow-scroll lg:overflow-hidden lg:p-32">
       <Suspense fallback={<Loading />}>
         <ScoreboardContent />
       </Suspense>
@@ -51,7 +54,7 @@ const ScoreboardPage = async () => {
           </Link>
         </PrimaryButton>
         <PrimaryButton>
-          <Link href="/profile" className="flex items-center gap-2">
+          <Link href={`/profile/${publicId}`} className="flex items-center gap-2">
             <User />
             {session?.user ? 'Your ranking' : 'Sign in to save your score'}
           </Link>
