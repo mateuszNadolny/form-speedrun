@@ -11,13 +11,13 @@ export const newPassword = async (values: z.infer<typeof NewPasswordSchema>) => 
   try {
     const validatedFields = NewPasswordSchema.safeParse(values);
     if (!validatedFields.success) {
-      return { error: 'dupa An unexpected error occurred' };
+      return { error: 'An unexpected error occurred' };
     }
 
     const { password, confirmPassword, token } = validatedFields.data;
 
     if (!token) {
-      return { error: 'tutaj An unexpected error occurred' };
+      return { error: 'An unexpected error occurred' };
     }
     if (password !== confirmPassword) {
       return { error: `Passwords do not match` };
@@ -25,7 +25,7 @@ export const newPassword = async (values: z.infer<typeof NewPasswordSchema>) => 
 
     const existingToken = await getPasswordResetTokenByToken(token);
     if (!existingToken) {
-      return { error: 'huj An unexpected error occurred' };
+      return { error: 'An unexpected error occurred' };
     }
     if ('error' in existingToken) {
       return { error: existingToken.error };
@@ -40,7 +40,7 @@ export const newPassword = async (values: z.infer<typeof NewPasswordSchema>) => 
     const existingUser = await getUserByEmail(existingToken.email);
 
     if (!existingUser) {
-      return { error: 'huj2 An unexpected error occurred' };
+      return { error: 'An unexpected error occurred' };
     }
 
     if ('error' in existingUser) {
@@ -76,6 +76,6 @@ export const newPassword = async (values: z.infer<typeof NewPasswordSchema>) => 
       success: '✅ Password updated successfully! You will now be redirected to signin page'
     };
   } catch (error) {
-    return { error: 'trzczina An unexpected error occurred' };
+    return { error: 'An unexpected error occurred' };
   }
 };
