@@ -29,3 +29,13 @@ export const getUserByEmail = async (email: string) => {
     return null;
   }
 };
+
+export const isOAuthAccount = async (userId: string) => {
+  const account = await prisma.account.findFirst({
+    where: {
+      userId
+    }
+  });
+
+  return !!account;
+};

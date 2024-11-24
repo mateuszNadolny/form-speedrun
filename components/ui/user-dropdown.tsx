@@ -13,7 +13,7 @@ import {
 
 import { getUserById } from '@/lib/user';
 
-import { Settings, User, LogOut } from 'lucide-react';
+import { User, LogOut, Settings } from 'lucide-react';
 import { FaUser } from 'react-icons/fa';
 
 const UserDropdown = async () => {
@@ -45,8 +45,10 @@ const UserDropdown = async () => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
+          <Link href="/settings" className="w-full flex">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-gray-700" />
         <DropdownMenuItem className="w-full">

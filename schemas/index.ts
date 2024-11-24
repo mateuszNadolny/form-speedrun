@@ -55,3 +55,21 @@ export const GameScoreSchema = z.object({
     })
   )
 });
+
+export const UpdatePasswordSchema = z
+  .object({
+    isOAuthAccount: z.boolean(),
+    oldPassword: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    }),
+    newPassword: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    }),
+    confirmNewPassword: z.string().trim().min(8, {
+      message: 'Minimum 8 characters'
+    })
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords don't match",
+    path: ['confirmNewPassword']
+  });
