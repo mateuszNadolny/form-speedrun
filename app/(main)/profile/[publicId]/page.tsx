@@ -19,7 +19,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const data = await getUserGameScores(params.publicId);
 
   return (
-    <section className="flex flex-col w-full h-screen max-h-screen pt-20 px-5 lg:p-28 overflow-y-auto">
+    <section className="flex flex-col w-full h-screen max-h-screen py-20 px-5 lg:pt-26 lg:px-20 overflow-y-auto">
       <Suspense fallback={<Loading />}>
         <ProfileHeader
           name={data[0].username}

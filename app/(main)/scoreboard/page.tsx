@@ -42,7 +42,7 @@ const ScoreboardPage = async () => {
   const publicId = user?.publicId;
 
   return (
-    <section className="flex h-screen min-h-screen flex-col items-center justify-start touch-auto overflow-y-scroll px-4 py-20 lg:pt-32 lg:pb-10 lg:px-32">
+    <section className="flex h-screen min-h-screen flex-col items-center justify-start touch-auto overflow-y-scroll px-4 py-20 lg:pt-26 lg:pb-10 lg:px-32">
       <Suspense fallback={<Loading />}>
         <ScoreboardContent />
       </Suspense>
