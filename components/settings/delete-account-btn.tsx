@@ -1,10 +1,10 @@
 'use client';
+import { useTransition } from 'react';
+
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
-import { useTransition } from 'react';
-import { deleteUser } from '@/actions/delete-user';
-import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
 import {
   AlertDialog,
@@ -16,7 +16,9 @@ import {
   AlertDialogCancel,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
+import { deleteUser } from '@/actions/delete-user';
 
+import { Trash2 } from 'lucide-react';
 interface DeleteAccountBtnProps {
   disabled: boolean;
   userId: string;
@@ -24,7 +26,6 @@ interface DeleteAccountBtnProps {
 
 const DeleteAccountBtn = ({ disabled, userId }: DeleteAccountBtnProps) => {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const handleDelete = () => {
     startTransition(async () => {
@@ -33,7 +34,7 @@ const DeleteAccountBtn = ({ disabled, userId }: DeleteAccountBtnProps) => {
         toast({
           title: 'Account deleted successfully!'
         });
-        router.push('/');
+        await signOut({ callbackUrl: '/' });
       } catch (error) {
         toast({
           variant: 'destructive',

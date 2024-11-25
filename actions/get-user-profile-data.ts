@@ -2,14 +2,23 @@
 
 import prisma from '@/lib/prismadb';
 
-import { auth } from '@/auth';
+interface UserProfileData {
+  name: string | null;
+  image: string | null;
+  createdAt: Date;
+  scores: {
+    id: string;
+    totalTime: number;
+    createdAt: Date;
+    splitTimes: {
+      id: string;
+      label: string;
+      time: number;
+    }[];
+  }[];
+}
 
-export async function getUserProfileData(publicId: string) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return { success: 'Invalid user' };
-  }
-
+export async function getUserProfileData(publicId: string): Promise<UserProfileData | null> {
   const user = await prisma.user.findUnique({
     where: {
       publicId

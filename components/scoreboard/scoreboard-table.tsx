@@ -92,8 +92,10 @@ const ScoreboardTable = <TData, TValue>({
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No results.
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center text-muted-foreground">
+                    No games played yet.
                   </TableCell>
                 </TableRow>
               )}
