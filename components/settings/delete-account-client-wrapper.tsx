@@ -8,7 +8,7 @@ interface ClientWrapperProps {
   userId: string;
 }
 
-export function ClientWrapper({ userId }: ClientWrapperProps) {
+const ClientWrapper = ({ userId }: ClientWrapperProps) => {
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   return (
@@ -17,4 +17,6 @@ export function ClientWrapper({ userId }: ClientWrapperProps) {
       <DeleteAccountBtn disabled={!isConfirmed} userId={userId} />
     </>
   );
-}
+};
+
+export default ClientWrapper;

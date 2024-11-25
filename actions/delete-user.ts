@@ -1,29 +1,24 @@
-import prisma from '@/lib/prismadb';
+'use server';
 
-import { auth } from '@/auth';
+import prisma from '@/lib/prismadb';
+import { signOut } from '@/auth';
+import { revalidatePath } from 'next/cache';
 
 export async function deleteUser(id: string) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return { success: 'Invalid user' };
+  if (!id) {
+    throw new Error('Invalid user');
   }
 
   try {
-    const user = await prisma.user.delete({
-      where: {
-        id
-      },
-      include: {
-        scores: true,
-        account: true
-      }
+    await prisma.user.delete({
+      where: { id }
     });
 
-    if (!user) {
-      return { error: 'User not found' };
-    }
+    revalidatePath('/');
+
+    return { success: true };
   } catch (error) {
     console.error('Error deleting user:', error);
-    return { error: 'Failed to delete user' };
+    throw new Error('Failed to delete user');
   }
 }

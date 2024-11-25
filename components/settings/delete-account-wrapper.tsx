@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 
-import { ClientWrapper } from './delete-account-client-wrapper';
+import ClientWrapper from '@/components/settings/delete-account-client-wrapper';
 import { Trash2 } from 'lucide-react';
 
 const DeleteAccountWrapper = async () => {

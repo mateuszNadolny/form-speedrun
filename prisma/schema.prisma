@@ -23,14 +23,14 @@ model User {
   lastPasswordUpdate DateTime?
   hashedPassword String?
   createdAt      DateTime   @default(now())
-  scores         UserScore[]
+  scores         UserScore[] @relation("UserToUserScore")
   account        Account?
 }
 
 model UserScore {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation("UserToUserScore", fields: [userId], references: [id], onDelete: Cascade)
   totalTime Int
   splitTimes SplitTime[]
   createdAt DateTime @default(now())
@@ -42,7 +42,7 @@ model SplitTime {
   label     String
   time      Int
   userScoreId String   @db.ObjectId
-  userScore UserScore @relation(fields: [userScoreId], references: [id])
+  userScore UserScore @relation(fields: [userScoreId], references: [id], onDelete: Cascade)
 }
 
 model Account {

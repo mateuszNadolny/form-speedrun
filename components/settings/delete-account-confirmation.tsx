@@ -10,9 +10,7 @@ interface DeleteAccountConfirmationProps {
 
 const DELETE_CONFIRMATION = 'DELETE';
 
-export function DeleteAccountConfirmation({
-  onConfirmationChange
-}: DeleteAccountConfirmationProps) {
+const DeleteAccountConfirmation = ({ onConfirmationChange }: DeleteAccountConfirmationProps) => {
   const [confirmation, setConfirmation] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +33,6 @@ export function DeleteAccountConfirmation({
       />
     </div>
   );
-}
+};
 
 export default DeleteAccountConfirmation;
