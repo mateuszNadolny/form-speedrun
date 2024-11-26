@@ -168,16 +168,17 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center lg:items-start">
       <div className="w-full flex flex-col items-center lg:items-start space-y-6">
-        <Label className="block text-4xl lg:text-5xl font-medium text-color-teritary mb-2">
+        <Label className="block text-4xl lg:text-5xl font-medium text-color-teritary mb-2 select-none">
           {input.label}
         </Label>
         {input.type === 'date' ? (
-          <p className="text-lg text-center lg:text-start text-muted-foreground mb-4">
-            To enter: <span className="font-bold">{formatDate(input.value as string)}</span>
+          <p className="text-lg text-center lg:text-start text-muted-foreground mb-4 select-none">
+            To enter:{' '}
+            <span className="font-bold select-none">{formatDate(input.value as string)}</span>
           </p>
         ) : (
-          <p className="text-lg text-center lg:text-start w-[90%] lg:w-full text-muted-foreground mb-4">
-            To enter: <span className="font-bold">{input.value}</span>
+          <p className="text-lg text-center lg:text-start w-[90%] lg:w-full text-muted-foreground mb-4 select-none">
+            To enter: <span className="font-bold select-none">{input.value}</span>
           </p>
         )}
         {renderInput()}
