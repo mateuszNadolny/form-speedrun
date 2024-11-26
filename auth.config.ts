@@ -1,11 +1,6 @@
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
-import Credentials from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-
-import { LoginSchema } from './schemas';
-
-import { getUserByEmail } from './lib/user';
+import Discord from 'next-auth/providers/discord';
 import type { NextAuthConfig } from 'next-auth';
 
 export default {
@@ -18,32 +13,15 @@ export default {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     }),
-    Credentials({
-      credentials: {
-        email: { label: 'email', type: 'text' },
-        password: { label: 'password', type: 'password' }
-      },
-      authorize: async (credentials) => {
-        const validateFields = LoginSchema.safeParse(credentials);
-        if (validateFields.success) {
-          const { email, password } = validateFields.data;
-          const user = await getUserByEmail(credentials.email as string);
-
-          if (!user || !user?.hashedPassword) {
-            throw new Error('Invalid credentials');
-          }
-
-          const isCorrectPassword = await bcrypt.compare(
-            credentials.password as string,
-            user.hashedPassword
-          );
-
-          if (!isCorrectPassword) {
-            throw new Error('Invalid credentials');
-          }
-          return user;
-        } else {
-          throw new Error('Invalid credentials');
+    Discord({
+      clientId: process.env.DISCORD_CLIENT_ID as string,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+      authorization: {
+        url: 'https://discord.com/oauth2/authorize',
+        params: {
+          scope: 'identify guilds email guilds.join gdm.join connections',
+          response_type: 'code',
+          redirect_uri: 'http://localhost:3000/api/auth/callback/discord'
         }
       }
     })
