@@ -21,7 +21,7 @@ export default {
         params: {
           scope: 'identify guilds email guilds.join gdm.join connections',
           response_type: 'code',
-          redirect_uri: 'http://localhost:3000/api/auth/callback/discord'
+          redirect_uri: process.env.DISCORD_REDIRECT_URI as string
         }
       }
     })
