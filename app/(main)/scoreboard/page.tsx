@@ -54,7 +54,7 @@ const ScoreboardPage = async () => {
           </Link>
         </PrimaryButton>
         <PrimaryButton>
-          <Link href={`/profile/${publicId}`} className="flex items-center gap-2">
+          <Link href={session?.user ? '/profile' : '/signin'} className="flex items-center gap-2">
             <User />
             {session?.user ? 'Your ranking' : 'Sign in to save your score'}
           </Link>
