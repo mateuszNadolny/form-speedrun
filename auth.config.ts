@@ -6,16 +6,16 @@ import type { NextAuthConfig } from 'next-auth';
 export default {
   providers: [
     GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string
+      clientId: process.env.AUTH_GITHUB_ID as string,
+      clientSecret: process.env.AUTH_GITHUB_SECRET as string
     }),
     Google({
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string
     }),
     Discord({
-      clientId: process.env.DISCORD_CLIENT_ID as string,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+      clientId: process.env.AUTH_DISCORD_ID as string,
+      clientSecret: process.env.AUTH_DISCORD_SECRET as string,
       authorization: {
         url: 'https://discord.com/oauth2/authorize',
         params: {
