@@ -54,7 +54,6 @@ export const generateInputs = (): InputTypes[] => {
       label: 'Website',
       value: faker.internet.url({ protocol: 'https', appendSlash: false })
     },
-    { type: 'color', label: 'Favorite Color', value: faker.internet.color() },
     {
       type: 'range',
       label: 'Volume',
