@@ -106,9 +106,9 @@ const StepThree = () => {
         Try to beat the scores of <span className={classNames.dialogSpan}>other players</span>
       </DialogTitle>
       <DialogDescription className={classNames.dialogDescription}>
-        {`Each input will come with specific data for you to enter, and it will change every time you play. `}
+        {`After each race you can check the detailed performance analytics of you race.`}
         <br />
-        {`Copying and pasting data into the input fields won’t be allowed.`}
+        {`Get better, compete with players worldwide and climb the global leaderboard!`}
       </DialogDescription>
     </DialogHeader>
   );
