@@ -1,6 +1,6 @@
 # Form Speedrunner 🏃‍➡️
 
-Form Speedrunner is an interactive web game that challenges players to complete form submissions as quickly as possible while maintaining accuracy. Race against time, compete with players worldwide, and climb the global leaderboard! You can check the live demo [here](https://form-speedrunner).
+Form Speedrunner is an interactive web game that challenges players to complete form submissions as quickly as possible while maintaining accuracy. Race against time, compete with players worldwide, and climb the global leaderboard! You can check the live demo [here](https://form-speedrunner.com).
 
 ## Features
 
