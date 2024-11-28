@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import Link from 'next/link';
 
 import { Suspense } from 'react';
@@ -12,6 +14,11 @@ import ScoreboardTable from '@/components/scoreboard/scoreboard-table';
 import { getAllGameScores } from '@/actions/get-all-game-scores';
 
 import { Play, User } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Scoreboard | Form Speedrunner',
+  description: 'View the scoreboard of Form Speedrunner'
+};
 
 async function getData(): Promise<Score[]> {
   const scores = await getAllGameScores();

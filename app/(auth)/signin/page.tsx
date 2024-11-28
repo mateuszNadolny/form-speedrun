@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import AuthWrapper from '@/components/auth/auth-wrapper';
 import BackButton from '@/components/ui/back-button';
+
+export const metadata: Metadata = {
+  title: 'Sign in | Form Speedrunner',
+  description: 'Sign in to Form Speedrunner'
+};
 
 const SigninPage = () => {
   return (

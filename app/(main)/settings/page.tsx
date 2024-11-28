@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
+
 import { auth } from '@/auth';
 import { getUserById } from '@/lib/user';
 import DeleteAccountWrapper from '@/components/settings/delete-account-wrapper';
 import UpdateUsernameForm from '@/components/settings/update-username-form';
+
+export const metadata: Metadata = {
+  title: 'Settings | Form Speedrunner',
+  description: 'Manage your settings'
+};
 
 const SettingsPage = async () => {
   const session = await auth();

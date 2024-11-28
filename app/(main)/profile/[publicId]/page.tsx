@@ -1,10 +1,11 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import Loading from '@/app/(main)/profile/[publicId]/loading';
 
 import ProfileHeader from '@/components/profile/profile-header';
 import ProfileStatsWrapper from '@/components/profile/profile-stats-wrapper';
-import { columns, Score } from '@/components/scoreboard/columns';
+import { columns } from '@/components/scoreboard/columns';
 import ScoreboardTable from '@/components/scoreboard/scoreboard-table';
 
 import { getUserGameScores } from '@/actions/get-user-game-scores';
@@ -13,6 +14,15 @@ import { getUserProfileData } from '@/actions/get-user-profile-data';
 interface ProfilePageProps {
   params: {
     publicId: string;
+  };
+}
+
+export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
+  const user = await getUserProfileData(params.publicId);
+
+  return {
+    title: `${user?.name ?? 'Anonymous'}'s Profile - SpeedRun`,
+    description: `View ${user?.name ?? 'Anonymous'}'s speedrun profile and achievements`
   };
 }
 

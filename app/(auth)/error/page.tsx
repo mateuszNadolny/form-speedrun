@@ -1,6 +1,12 @@
 'use client';
+import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'Oops... ;( | Form Speedrunner',
+  description: 'Something went wrong'
+};
 
 const ErrorPage = () => {
   const router = useRouter();

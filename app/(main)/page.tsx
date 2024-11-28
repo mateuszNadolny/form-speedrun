@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home | Form Speedrunner',
+  description: 'Home page of Form Speedrunner'
+};
+
 import HeroSection from '@/components/landing-page/hero-section';
 const Home = () => {
   return (

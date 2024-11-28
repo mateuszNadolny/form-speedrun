@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
 import Game from '@/components/game/game';
+
+export const metadata: Metadata = {
+  title: 'Play | Form Speedrunner',
+  description: 'Play Form Speedrunner'
+};
 
 const GamePage = () => {
   return (
