@@ -38,6 +38,7 @@ export async function getUserGameScores(publicId: string) {
       username: score.user.name ?? 'Anonymous',
       splitTimes: score.splitTimes,
       time: score.totalTime,
+      publicId: score.user.publicId,
       image: score.user.image ?? '/default-avatar.png',
       createdAt: score.createdAt.toISOString()
     }));
