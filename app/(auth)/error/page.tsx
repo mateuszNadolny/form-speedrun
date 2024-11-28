@@ -1,7 +1,5 @@
-'use client';
 import type { Metadata } from 'next';
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
+import ErrorReturnButton from '@/components/ui/error-return-button';
 
 export const metadata: Metadata = {
   title: 'Oops... ;( | Form Speedrunner',
@@ -9,7 +7,6 @@ export const metadata: Metadata = {
 };
 
 const ErrorPage = () => {
-  const router = useRouter();
   return (
     <section className="flex h-screen min-h-screen flex-col items-center justify-center overflow-hidden">
       <div className="text-center">
@@ -17,11 +14,7 @@ const ErrorPage = () => {
         <p className="text-lg text-muted-foreground mb-8">
           {`We're sorry, but an error occurred while processing your request.`}
         </p>
-        <Button
-          className="bg-color-teritary text-color-light hover:bg-color-secondary"
-          onClick={() => router.back()}>
-          Go Back
-        </Button>
+        <ErrorReturnButton />
       </div>
     </section>
   );
