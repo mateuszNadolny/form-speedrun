@@ -4,7 +4,7 @@ import BackButton from '@/components/ui/back-button';
 
 const SigninPage = () => {
   return (
-    <section className="flex h-screen min-h-screen flex-col items-center justify-center">
+    <section className="flex h-screen min-h-screen flex-col items-center justify-center p-4">
       <BackButton text="Back to Form Speedrunner" href="/" />
       <Suspense fallback={<div>Loading...</div>}>
         <AuthWrapper />

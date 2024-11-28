@@ -17,7 +17,7 @@ const AuthCostsInfo = () => {
       <DialogTrigger asChild>
         <button className="group flex items-center gap-2 w-full justify-center text-muted-foreground text-sm transition-colors">
           <Info className="w-4 h-4" />
-          <span className="group-hover:underline">
+          <span className="group-hover:underline text-[10px] lg:text-base">
             Why is there no option for traditional email and password login?
           </span>
         </button>

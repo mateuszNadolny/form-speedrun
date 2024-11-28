@@ -112,7 +112,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
           <input
             type="date"
             id="date"
-            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100%] lg:w-[400px] my-2"
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
@@ -123,7 +123,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
         return (
           <input
             type="time"
-            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            className="p-2 rounded-xl bg-color-secondary text-color-light text-xl w-[100%] lg:w-[400px] my-2"
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
@@ -144,7 +144,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
       case 'password':
         return (
           <PasswordInput
-            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[100%] lg:w-[400px] my-2"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onPaste={handlePaste}
@@ -158,7 +158,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onPaste={handlePaste}
-            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[400px] my-2"
+            className="p-2 text-lg lg:text-xl rounded-xl bg-color-secondary text-color-light text-xl w-[100%] lg:w-[400px] my-2"
             required
           />
         );
@@ -168,7 +168,7 @@ const FormInput = ({ input, onComplete }: FormInputProps) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center lg:items-start">
       <div className="w-full flex flex-col items-center lg:items-start space-y-6">
-        <Label className="block text-4xl lg:text-5xl font-medium text-color-teritary mb-2 select-none">
+        <Label className="block text-4xl lg:text-5xl font-medium text-color-teritary mb-2 select-none text-center lg:text-start">
           {input.label}
         </Label>
         {input.type === 'date' ? (

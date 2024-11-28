@@ -9,7 +9,6 @@ import PrimaryButton from '@/components/ui/primary-button';
 import { columns, Score } from '@/components/scoreboard/columns';
 import ScoreboardTable from '@/components/scoreboard/scoreboard-table';
 
-import { getUserById } from '@/lib/user';
 import { getAllGameScores } from '@/actions/get-all-game-scores';
 
 import { Play, User } from 'lucide-react';
@@ -29,7 +28,7 @@ async function ScoreboardContent() {
         <span className="text-teal-500 font-extrabold">speedrunners</span>
       </div>
       <ScoreboardTable columns={columns} data={data} />
-      <div className="text-color-light text-sm my-6">
+      <div className="text-color-light text-center text-sm my-6">
         {`Don't see your name? Keep practicing and climb the ranks!`}
       </div>
     </>
@@ -38,15 +37,13 @@ async function ScoreboardContent() {
 
 const ScoreboardPage = async () => {
   const session = await auth();
-  const user = await getUserById(session?.user?.id as string);
-  const publicId = user?.publicId;
 
   return (
-    <section className="flex h-screen min-h-screen flex-col items-center justify-start touch-auto overflow-y-auto px-4 py-20 lg:py-28 lg:pb-4 lg:px-32">
+    <section className="flex h-screen min-h-screen flex-col items-center justify-start touch-auto overflow-y-auto px-4 py-28 lg:pb-4 lg:px-32">
       <Suspense fallback={<Loading />}>
         <ScoreboardContent />
       </Suspense>
-      <div className="flex gap-4">
+      <div className="flex flex-col lg:flex-row gap-4">
         <PrimaryButton>
           <Link href="/game" className="flex items-center gap-2">
             <Play />
