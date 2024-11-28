@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   const user = await getUserProfileData(params.publicId);
 
   return {
-    title: `${user?.name ?? 'Anonymous'}'s Profile - SpeedRun`,
+    title: `${user?.name ?? 'Anonymous'}'s Profile | Form Speedrunner`,
     description: `View ${user?.name ?? 'Anonymous'}'s speedrun profile and achievements`
   };
 }
