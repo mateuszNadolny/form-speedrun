@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 import AuthContext from '@/providers/auth-provider';
 import TanstackContext from '@/providers/tanstack-provider';
+import PlausibleProvider from 'next-plausible';
 
 const nunito = Nunito({
   weight: ['400', '500', '600', '700', '900'],
@@ -26,6 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <PlausibleProvider domain="form-speedrunner.com" />
+      </head>
       <body className={nunito.className}>
         <Toaster />
         <TanstackContext>
