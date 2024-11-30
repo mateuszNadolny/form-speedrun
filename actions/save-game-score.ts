@@ -22,7 +22,6 @@ export async function saveGameScore(values: z.infer<typeof GameScoreSubmissionSc
 
     const { sessionId, endTime, splitTimes } = validatedFields.data;
 
-    // Fetch and validate game session
     const gameSession = await prisma.gameSession.findUnique({
       where: {
         id: sessionId,
@@ -34,22 +33,18 @@ export async function saveGameScore(values: z.infer<typeof GameScoreSubmissionSc
       return { error: 'Invalid or expired game session' };
     }
 
-    // Calculate total time from server-side timestamp
     const totalTime = endTime - gameSession.startTime;
 
-    // Validate time constraints
     if (totalTime > MAX_ALLOWED_TIME || totalTime < MIN_ALLOWED_TIME) {
       return { error: 'Invalid completion time' };
     }
 
-    // Validate split times sum approximately equals total time
     const splitTimeSum = splitTimes.reduce((sum, split) => sum + split.time, 0);
     if (Math.abs(splitTimeSum - totalTime) > 1000) {
       // 1 second tolerance
       return { error: 'Invalid split times' };
     }
 
-    // Save score and mark session as expired
     await prisma.$transaction([
       prisma.userScore.create({
         data: {

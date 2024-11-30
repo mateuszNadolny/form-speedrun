@@ -1,26 +1,32 @@
 'use server';
 
-import { v4 as uuidv4 } from 'uuid';
 import { generateInputs } from '@/types/data';
 import prisma from '@/lib/prismadb';
 
 export async function createGameSession() {
-  const sessionId = uuidv4();
-  const startTime = Date.now();
-  const inputs = generateInputs().slice(0, 8);
+  try {
+    const startTime = Date.now();
+    const inputs = generateInputs().slice(0, 8);
 
-  await prisma.gameSession.create({
-    data: {
-      id: sessionId,
-      startTime,
-      inputs: JSON.parse(JSON.stringify(inputs)),
-      expired: false
+    const gameSession = await prisma.gameSession.create({
+      data: {
+        startTime,
+        inputs: JSON.parse(JSON.stringify(inputs)),
+        expired: false
+      }
+    });
+
+    if (!gameSession) {
+      throw new Error('Failed to create game session');
     }
-  });
 
-  return {
-    sessionId,
-    startTime,
-    inputs
-  };
+    return {
+      sessionId: gameSession.id,
+      startTime: gameSession.startTime,
+      inputs
+    };
+  } catch (error) {
+    console.error('Error creating game session:', error);
+    throw new Error('Failed to initialize game');
+  }
 }

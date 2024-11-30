@@ -53,14 +53,23 @@ const Game = () => {
   }, [currentInputIndex, gameState, startSplitTimer]);
 
   const startGame = useCallback(async () => {
-    const session = await createGameSession();
-    setSessionId(session.sessionId);
-    setGameInputs(session.inputs);
-    setCurrentInputIndex(0);
-    setGameState('playing');
-    resetTimers();
-    resetEntries();
-    startGeneralTimer();
+    try {
+      const session = await createGameSession();
+      if (!session) {
+        throw new Error('Failed to create session');
+      }
+
+      setSessionId(session.sessionId);
+      setGameInputs(session.inputs);
+      setCurrentInputIndex(0);
+      setGameState('playing');
+      resetTimers();
+      resetEntries();
+      startGeneralTimer();
+    } catch (error) {
+      console.error('Error starting game:', error);
+      setGameState('idle');
+    }
   }, [resetTimers, resetEntries, startGeneralTimer]);
   const handleSaveScore = useCallback(async () => {
     const splitTimes = gameInputs.map((input, index) => ({
