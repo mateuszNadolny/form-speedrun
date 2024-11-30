@@ -11,6 +11,7 @@ import { saveGameScore } from '@/actions/save-game-score';
 import { InputTypes } from '@/types/types';
 import { generateInputs } from '@/types/data';
 import { formatTime } from '@/lib/time';
+import { createGameSession } from '@/actions/create-game-session';
 
 const Game = () => {
   const [gameState, setGameState] = useState('idle'); //idle, playing, finished
@@ -25,6 +26,7 @@ const Game = () => {
     resetTimers,
     getSplitTime
   } = useTimerStore();
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   const generateGameInputs = useCallback(() => {
     const allInputs = generateInputs();
@@ -50,28 +52,28 @@ const Game = () => {
     }
   }, [currentInputIndex, gameState, startSplitTimer]);
 
-  const startGame = useCallback(() => {
-    const newGameInputs = generateGameInputs();
-    setGameInputs(newGameInputs);
+  const startGame = useCallback(async () => {
+    const session = await createGameSession();
+    setSessionId(session.sessionId);
+    setGameInputs(session.inputs);
     setCurrentInputIndex(0);
     setGameState('playing');
     resetTimers();
     resetEntries();
     startGeneralTimer();
-  }, [generateGameInputs, resetTimers, resetEntries, startGeneralTimer]);
-
+  }, [resetTimers, resetEntries, startGeneralTimer]);
   const handleSaveScore = useCallback(async () => {
-    const totalTime = gameInputs.reduce((total, _, index) => total + getSplitTime(index), 0);
     const splitTimes = gameInputs.map((input, index) => ({
       label: input.label,
       time: getSplitTime(index)
     }));
 
     await saveGameScore({
-      totalTime,
+      sessionId: sessionId as string,
+      endTime: Date.now(),
       splitTimes
     });
-  }, [gameInputs, getSplitTime]);
+  }, [gameInputs, getSplitTime, sessionId]);
 
   const handleInputComplete = useCallback(() => {
     stopSplitTimer(currentInputIndex);

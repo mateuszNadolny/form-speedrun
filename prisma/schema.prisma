@@ -60,3 +60,11 @@ model Account {
   user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
 }
+
+model GameSession {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  startTime Float
+  inputs    Json
+  expired   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

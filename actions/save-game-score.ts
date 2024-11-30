@@ -2,42 +2,71 @@
 
 import { z } from 'zod';
 import prisma from '@/lib/prismadb';
-import { GameScoreSchema } from '@/schemas';
+import { GameScoreSubmissionSchema } from '@/schemas';
 import { auth } from '@/auth';
 
-export async function saveGameScore(values: z.infer<typeof GameScoreSchema>) {
+const MAX_ALLOWED_TIME = 300000; // 5 minutes
+const MIN_ALLOWED_TIME = 1000; // 1 second
+
+export async function saveGameScore(values: z.infer<typeof GameScoreSubmissionSchema>) {
   try {
-    const validatedFields = GameScoreSchema.safeParse(values);
+    const validatedFields = GameScoreSubmissionSchema.safeParse(values);
     if (!validatedFields.success) {
       return { error: 'Invalid score data' };
     }
 
     const session = await auth();
-      if (!session?.user?.id) {
-      return { success: 'Score not saved - user not logged in' };
+    if (!session?.user?.id) {
+      return { error: 'User not authenticated' };
     }
 
-    const { totalTime, splitTimes } = validatedFields.data;
+    const { sessionId, endTime, splitTimes } = validatedFields.data;
 
-    const savedScore = await prisma.userScore.create({
-      data: {
-        userId: session.user.id,
-        totalTime,
-        splitTimes: {
-          create: splitTimes.map((split) => ({
-            label: split.label,
-            time: split.time
-          }))
-        }
-      },
-      include: {
-        splitTimes: true
+    // Fetch and validate game session
+    const gameSession = await prisma.gameSession.findUnique({
+      where: {
+        id: sessionId,
+        expired: false
       }
     });
 
-    return {
-      success: 'Score saved successfully'
-    };
+    if (!gameSession) {
+      return { error: 'Invalid or expired game session' };
+    }
+
+    // Calculate total time from server-side timestamp
+    const totalTime = endTime - gameSession.startTime;
+
+    // Validate time constraints
+    if (totalTime > MAX_ALLOWED_TIME || totalTime < MIN_ALLOWED_TIME) {
+      return { error: 'Invalid completion time' };
+    }
+
+    // Validate split times sum approximately equals total time
+    const splitTimeSum = splitTimes.reduce((sum, split) => sum + split.time, 0);
+    if (Math.abs(splitTimeSum - totalTime) > 1000) {
+      // 1 second tolerance
+      return { error: 'Invalid split times' };
+    }
+
+    // Save score and mark session as expired
+    await prisma.$transaction([
+      prisma.userScore.create({
+        data: {
+          userId: session.user.id,
+          totalTime,
+          splitTimes: {
+            create: splitTimes
+          }
+        }
+      }),
+      prisma.gameSession.update({
+        where: { id: sessionId },
+        data: { expired: true }
+      })
+    ]);
+
+    return { success: 'Score saved successfully' };
   } catch (error) {
     console.error('Error saving score:', error);
     return { error: 'Failed to save score' };
